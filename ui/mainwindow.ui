@@ -15,8 +15,12 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0">
-     <widget class="QListView" name="pendientes_listView"/>
+    <item row="1" column="1">
+     <widget class="QPushButton" name="procesos_pushButton">
+      <property name="text">
+       <string>Iniciar Procesos</string>
+      </property>
+     </widget>
     </item>
     <item row="0" column="1">
      <widget class="QListView" name="procesados_listView"/>
@@ -24,11 +28,18 @@
     <item row="0" column="2">
      <widget class="QListView" name="terminados_listView"/>
     </item>
-    <item row="1" column="1">
-     <widget class="QPushButton" name="procesos_pushButton">
-      <property name="text">
-       <string>Iniciar Procesos</string>
-      </property>
+    <item row="0" column="0">
+     <widget class="QTableWidget" name="pendientes_tableWidget">
+      <column>
+       <property name="text">
+        <string>ID</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Operación</string>
+       </property>
+      </column>
      </widget>
     </item>
    </layout>

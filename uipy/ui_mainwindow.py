@@ -15,9 +15,9 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QGridLayout, QListView, QMainWindow,
-    QMenuBar, QPushButton, QSizePolicy, QStatusBar,
-    QWidget)
+from PySide6.QtWidgets import (QApplication, QGridLayout, QHeaderView, QListView,
+    QMainWindow, QMenuBar, QPushButton, QSizePolicy,
+    QStatusBar, QTableWidget, QTableWidgetItem, QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -28,10 +28,10 @@ class Ui_MainWindow(object):
         self.centralwidget.setObjectName(u"centralwidget")
         self.gridLayout = QGridLayout(self.centralwidget)
         self.gridLayout.setObjectName(u"gridLayout")
-        self.pendientes_listView = QListView(self.centralwidget)
-        self.pendientes_listView.setObjectName(u"pendientes_listView")
+        self.procesos_pushButton = QPushButton(self.centralwidget)
+        self.procesos_pushButton.setObjectName(u"procesos_pushButton")
 
-        self.gridLayout.addWidget(self.pendientes_listView, 0, 0, 1, 1)
+        self.gridLayout.addWidget(self.procesos_pushButton, 1, 1, 1, 1)
 
         self.procesados_listView = QListView(self.centralwidget)
         self.procesados_listView.setObjectName(u"procesados_listView")
@@ -43,10 +43,16 @@ class Ui_MainWindow(object):
 
         self.gridLayout.addWidget(self.terminados_listView, 0, 2, 1, 1)
 
-        self.procesos_pushButton = QPushButton(self.centralwidget)
-        self.procesos_pushButton.setObjectName(u"procesos_pushButton")
+        self.pendientes_tableWidget = QTableWidget(self.centralwidget)
+        if (self.pendientes_tableWidget.columnCount() < 2):
+            self.pendientes_tableWidget.setColumnCount(2)
+        __qtablewidgetitem = QTableWidgetItem()
+        self.pendientes_tableWidget.setHorizontalHeaderItem(0, __qtablewidgetitem)
+        __qtablewidgetitem1 = QTableWidgetItem()
+        self.pendientes_tableWidget.setHorizontalHeaderItem(1, __qtablewidgetitem1)
+        self.pendientes_tableWidget.setObjectName(u"pendientes_tableWidget")
 
-        self.gridLayout.addWidget(self.procesos_pushButton, 1, 1, 1, 1)
+        self.gridLayout.addWidget(self.pendientes_tableWidget, 0, 0, 1, 1)
 
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
@@ -65,5 +71,9 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
         self.procesos_pushButton.setText(QCoreApplication.translate("MainWindow", u"Iniciar Procesos", None))
+        ___qtablewidgetitem = self.pendientes_tableWidget.horizontalHeaderItem(0)
+        ___qtablewidgetitem.setText(QCoreApplication.translate("MainWindow", u"ID", None));
+        ___qtablewidgetitem1 = self.pendientes_tableWidget.horizontalHeaderItem(1)
+        ___qtablewidgetitem1.setText(QCoreApplication.translate("MainWindow", u"Operaci\u00f3n", None));
     # retranslateUi
 
