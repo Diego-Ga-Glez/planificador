@@ -73,14 +73,11 @@ class ProcesosDialog(QDialog):
     def formulario(self):
         nombre = self.ui.nombre_lineEdit.text()
         op = self.ui.operacion_comboBox.currentText()
-        num1 = self.ui.num1_lineEdit.text()
-        num2 = self.ui.num2_lineEdit.text()
+        num1 = int(self.ui.num1_lineEdit.text())
+        num2 = int(self.ui.num2_lineEdit.text())
         tiempo = self.ui.tiempo_spinBox.value()
         id_f = self.ui.id_lineEdit.text()
-
-        proceso_aux = [nombre,op,num1,num2,tiempo,id_f]
-
-        self.parent().procesos.append(proceso_aux)
+        self.parent().procesos.append([nombre,op,num1,num2,tiempo,id_f])
 
         # limpiar formulario
         self.ui.nombre_lineEdit.setText("")
@@ -113,11 +110,16 @@ class ProcesosDialog(QDialog):
     def validar_id(self):
         id_f = self.ui.id_lineEdit.text()
         
-        for i in  self.parent().procesos:
-            if i[5] == id_f:
+        for i in range(len(self.parent().procesos)):
+            if self.parent().procesos[i][5] == id_f:
                 self.ui.error_label.setText("ID repetido")
                 self.ui.aceptar_pushButton.setEnabled(False)
                 return
         
+        for i in range(len(self.parent().terminados)):
+            if self.parent().terminados[i][5] == id_f:
+                self.ui.error_label.setText("ID repetido")
+                self.ui.aceptar_pushButton.setEnabled(False)
+                return
+
         self.ui.error_label.setText("")
-        self.ui.aceptar_pushButton.setEnabled(True)

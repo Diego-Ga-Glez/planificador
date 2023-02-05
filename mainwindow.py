@@ -2,6 +2,7 @@ from PySide6.QtWidgets import QMainWindow, QTableWidgetItem
 from PySide6.QtCore import Slot
 from PySide6.QtTest import QTest
 from copy import deepcopy
+from math import floor
 
 from uipy.ui_mainwindow import Ui_MainWindow
 from numdialog import NumDialog
@@ -15,11 +16,19 @@ class MainWindow(QMainWindow):
         self.ui.setupUi(self)
 
         # variables
-        self.procesos = []
-        self.num = 0
-        self.ejecucion = []
+        self.procesos = []           # lista de procesos en total
+        self.lote = []               # lote actual en ejecucion
+        self.num = 0                 # numero de ventanas para abrir
+        self.ejecucion = []          # proceso en ejecucion
         self.terminados = []
         self.contador = 0
+
+        # Datos de prueba para no ingresar desde la ui
+        self.procesos.append(['Diego','Suma',6,4,3,'1'])
+        self.procesos.append(['Diana','Resta',7,3,3,'2'])
+        self.procesos.append(['Anaid','Division',5,5,2,'4'])
+        self.procesos.append(['Daniel','Suma',8,2,3,'3'])
+        self.procesos.append(['Jose','Resta',9,1,4,'6'])
 
         # interfaces graficas
         self.num_w = NumDialog(self)
@@ -40,40 +49,80 @@ class MainWindow(QMainWindow):
             self.proceso_w.ui.num_proceso_label.setText(str('PROCESO #' + str(i+1)))
             self.proceso_w.show()
             self.proceso_w.exec()
-            self.tabla_pendientes()
+            #self.tabla_pendientes(True)
 
+        # actualizar numero de lotes pendientes
+        str_num_proc = str(floor(len(self.procesos)/4))
+        self.ui.pendientes_label.setText('Lotes pendientes: '+ str_num_proc)
+        ######################################################################
         self.ui.procesos_pushButton.setEnabled(False)
-        #QTimer.singleShot(1000, self.proceso_ejecucion) #1000 milliseconds = 1 second
         QTest.qWait(1000)
         self.proceso_ejecucion()   
     
-    def tabla_pendientes(self):
+    def tabla_pendientes(self, bandera):
+        if len(self.lote) == 0:
+            if len(self.procesos) > 4:
+                for i in range(4): self.lote.append(self.procesos[i])
+            else:
+                for i in range(len(self.procesos)): self.lote.append(self.procesos[i])
+          
+        '''
 
+         Si la bandera es True se imprime toda la tabla
+         Si es False se imprime toda excepto el primer 
+         elemento
+
+        '''
+        
         self.ui.pendientes_tableWidget.setColumnCount(2)
-        self.ui.pendientes_tableWidget.setRowCount(len(self.procesos))
+        if bandera:
+            self.ui.pendientes_tableWidget.setRowCount(len(self.lote))
+        else:
+            self.ui.pendientes_tableWidget.setRowCount(len(self.lote)-1)
         row = 0
 
-        for i in self.procesos:
-            nombre_widget = QTableWidgetItem(i[0])
-            tme_widget = QTableWidgetItem(str(i[4]))
-            self.ui.pendientes_tableWidget.setItem(row,0,nombre_widget)
-            self.ui.pendientes_tableWidget.setItem(row,1,tme_widget)
-            row+=1
+        for i in self.lote:
+            if bandera:
+                nombre_widget = QTableWidgetItem(i[0])
+                tme_widget = QTableWidgetItem(str(i[4]))
+                self.ui.pendientes_tableWidget.setItem(row,0,nombre_widget)
+                self.ui.pendientes_tableWidget.setItem(row,1,tme_widget)
+                row+=1
+            else:
+                bandera = True
     
     def proceso_ejecucion(self):
-        aux = 0
+        
         while len(self.procesos) > 0:
-            aux+=1
+            '''
+            Las siguientes dos lineas son para poder
+            visualizar todos los elementos de otros lotes
+            antes de que el primero pase a ser ejecutado
+            '''
+            self.tabla_pendientes(True)
+            QTest.qWait(1000)
+            #################################################
+
             ejecucion = self.procesos[0]
             tiempo = deepcopy(ejecucion[4])
+            self.tabla_pendientes(False)
+
             while ejecucion[4] > 0:
+                self.tabla_ejecucion(ejecucion, tiempo)
                 ejecucion[4] -= 1
                 self.contador += 1
                 QTest.qWait(1000)
-                self.tabla_ejecucion(ejecucion, tiempo)
 
             self.terminados.append(self.procesos.pop(0))
-            self.tabla_pendientes()
+            self.lote.pop(0)
+
+            # actualizar numero de lotes pendientes
+            str_num_proc = str(floor(len(self.procesos)/4))
+            self.ui.pendientes_label.setText('Lotes pendientes: '+ str_num_proc)
+            ######################################################################
+
+            # limpiar tabla
+            self.ui.proceso_tableWidget.removeColumn(0) 
             self.tabla_terminados()
 
         self.ui.procesos_pushButton.setEnabled(True)
