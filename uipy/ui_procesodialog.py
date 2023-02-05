@@ -15,9 +15,9 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QAbstractButton, QApplication, QComboBox, QDialog,
-    QDialogButtonBox, QGroupBox, QLabel, QLineEdit,
-    QSizePolicy, QSpinBox, QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication, QComboBox, QDialog, QGroupBox,
+    QLabel, QLineEdit, QPushButton, QSizePolicy,
+    QSpinBox, QVBoxLayout, QWidget)
 
 class Ui_ProcesoDialog(object):
     def setupUi(self, ProcesoDialog):
@@ -132,17 +132,19 @@ class Ui_ProcesoDialog(object):
 
         self.verticalLayout.addWidget(self.id_groupBox)
 
-        self.buttonBox = QDialogButtonBox(ProcesoDialog)
-        self.buttonBox.setObjectName(u"buttonBox")
-        self.buttonBox.setOrientation(Qt.Horizontal)
-        self.buttonBox.setStandardButtons(QDialogButtonBox.Cancel|QDialogButtonBox.Ok)
+        self.error_label = QLabel(ProcesoDialog)
+        self.error_label.setObjectName(u"error_label")
+        self.error_label.setAlignment(Qt.AlignCenter)
 
-        self.verticalLayout.addWidget(self.buttonBox)
+        self.verticalLayout.addWidget(self.error_label)
+
+        self.aceptar_pushButton = QPushButton(ProcesoDialog)
+        self.aceptar_pushButton.setObjectName(u"aceptar_pushButton")
+
+        self.verticalLayout.addWidget(self.aceptar_pushButton)
 
 
         self.retranslateUi(ProcesoDialog)
-        self.buttonBox.accepted.connect(ProcesoDialog.accept)
-        self.buttonBox.rejected.connect(ProcesoDialog.reject)
 
         QMetaObject.connectSlotsByName(ProcesoDialog)
     # setupUi
@@ -166,5 +168,7 @@ class Ui_ProcesoDialog(object):
         self.tiempo_label.setText(QCoreApplication.translate("ProcesoDialog", u"Tiempo maximo", None))
         self.id_groupBox.setTitle("")
         self.id_label.setText(QCoreApplication.translate("ProcesoDialog", u"ID:", None))
+        self.error_label.setText("")
+        self.aceptar_pushButton.setText(QCoreApplication.translate("ProcesoDialog", u"Aceptar", None))
     # retranslateUi
 
