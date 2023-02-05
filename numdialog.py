@@ -1,6 +1,6 @@
 from PySide6.QtWidgets import QDialog
 from PySide6.QtCore import Slot
-from  uipy.ui_numdialog import Ui_NumDialog
+from uipy.ui_numdialog import Ui_NumDialog
 
 class NumDialog(QDialog):
     def __init__(self,parent):

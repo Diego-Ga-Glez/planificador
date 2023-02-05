@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
+    <width>939</width>
     <height>600</height>
    </rect>
   </property>
@@ -14,32 +14,193 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QGridLayout" name="gridLayout">
-    <item row="1" column="1">
-     <widget class="QPushButton" name="procesos_pushButton">
-      <property name="text">
-       <string>Iniciar Procesos</string>
+   <layout class="QGridLayout" name="gridLayout_4">
+    <item row="0" column="0">
+     <widget class="QGroupBox" name="groupBox_2">
+      <property name="title">
+       <string/>
       </property>
+      <layout class="QGridLayout" name="gridLayout_2">
+       <item row="1" column="0">
+        <widget class="QTableWidget" name="pendientes_tableWidget">
+         <property name="layoutDirection">
+          <enum>Qt::LeftToRight</enum>
+         </property>
+         <property name="autoFillBackground">
+          <bool>false</bool>
+         </property>
+         <attribute name="horizontalHeaderVisible">
+          <bool>true</bool>
+         </attribute>
+         <attribute name="horizontalHeaderCascadingSectionResizes">
+          <bool>false</bool>
+         </attribute>
+         <attribute name="horizontalHeaderStretchLastSection">
+          <bool>false</bool>
+         </attribute>
+         <attribute name="verticalHeaderCascadingSectionResizes">
+          <bool>false</bool>
+         </attribute>
+         <attribute name="verticalHeaderShowSortIndicator" stdset="0">
+          <bool>false</bool>
+         </attribute>
+         <attribute name="verticalHeaderStretchLastSection">
+          <bool>false</bool>
+         </attribute>
+         <column>
+          <property name="text">
+           <string>Nombre</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>TME</string>
+          </property>
+         </column>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="pendientes_label">
+         <property name="text">
+          <string>Lotes pendientes: 0</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="actual_label">
+         <property name="text">
+          <string>Lote actual</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </item>
     <item row="0" column="1">
-     <widget class="QListView" name="procesados_listView"/>
+     <widget class="QGroupBox" name="groupBox">
+      <property name="title">
+       <string/>
+      </property>
+      <layout class="QGridLayout" name="gridLayout">
+       <item row="2" column="0">
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="1" column="0">
+        <widget class="QTableWidget" name="proceso_tableWidget">
+         <row>
+          <property name="text">
+           <string>ID</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>Nombre</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>Operación</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>TME</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>Tiempo transcurrido</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>Tiempo restante</string>
+          </property>
+         </row>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QPushButton" name="procesos_pushButton">
+         <property name="text">
+          <string>Iniciar Procesos</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="proceso_label">
+         <property name="text">
+          <string>Proceso en ejecución</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
     </item>
     <item row="0" column="2">
-     <widget class="QListView" name="terminados_listView"/>
-    </item>
-    <item row="0" column="0">
-     <widget class="QTableWidget" name="pendientes_tableWidget">
-      <column>
-       <property name="text">
-        <string>ID</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>Operación</string>
-       </property>
-      </column>
+     <widget class="QGroupBox" name="groupBox_3">
+      <property name="title">
+       <string/>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_3">
+       <item row="0" column="0">
+        <widget class="QLabel" name="terminados_label">
+         <property name="text">
+          <string>Procesos terminados</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QTableWidget" name="terminados_tableWidget">
+         <column>
+          <property name="text">
+           <string>ID</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Operación</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Resultado</string>
+          </property>
+         </column>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="contador_label">
+         <property name="text">
+          <string>Contador general: 0</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </item>
    </layout>
@@ -49,7 +210,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>939</width>
      <height>22</height>
     </rect>
    </property>

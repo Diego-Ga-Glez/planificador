@@ -1,6 +1,6 @@
 from PySide6.QtWidgets import QDialog
 from PySide6.QtCore import Slot
-from  uipy.ui_procesodialog import Ui_ProcesoDialog
+from uipy.ui_procesodialog import Ui_ProcesoDialog
 
 class ProcesosDialog(QDialog):
     def __init__(self,parent):
@@ -23,4 +23,3 @@ class ProcesosDialog(QDialog):
         proceso_aux.append(self.ui.id_lineEdit.text())
 
         self.parent().procesos.append(proceso_aux)
-        self.parent().actualizar_tabla_pendientes()
