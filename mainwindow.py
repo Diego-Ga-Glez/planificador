@@ -1,4 +1,4 @@
-from PySide6.QtWidgets import QMainWindow, QTableWidgetItem
+from PySide6.QtWidgets import QMainWindow, QTableWidgetItem, QHeaderView
 from PySide6.QtCore import Slot
 from PySide6.QtTest import QTest
 from copy import deepcopy
@@ -29,6 +29,26 @@ class MainWindow(QMainWindow):
 
         #slots
         self.ui.procesos_pushButton.clicked.connect(self.mostrar_num_window)
+
+        # arreglar tamaño de columnas
+        pendiente = self.ui.pendientes_tableWidget.horizontalHeader()
+        pendiente.setSectionResizeMode(0,QHeaderView.Stretch)
+        pendiente.setSectionResizeMode(1,QHeaderView.Stretch)
+
+        proceso = self.ui.proceso_tableWidget.horizontalHeader()
+        proceso.setSectionResizeMode(0,QHeaderView.Stretch)
+        proceso = self.ui.proceso_tableWidget.verticalHeader()
+        proceso.setSectionResizeMode(0,QHeaderView.Stretch)
+        proceso.setSectionResizeMode(1,QHeaderView.Stretch)
+        proceso.setSectionResizeMode(2,QHeaderView.Stretch)
+        proceso.setSectionResizeMode(3,QHeaderView.Stretch)
+        proceso.setSectionResizeMode(4,QHeaderView.Stretch)
+        proceso.setSectionResizeMode(5,QHeaderView.Stretch)
+        
+        terminados = self.ui.terminados_tableWidget.horizontalHeader()
+        terminados.setSectionResizeMode(0,QHeaderView.Stretch)
+        terminados.setSectionResizeMode(1,QHeaderView.Stretch)
+        terminados.setSectionResizeMode(2,QHeaderView.Stretch)
 
     def closeEvent(self, event):
         exit()
@@ -101,9 +121,9 @@ class MainWindow(QMainWindow):
             self.tabla_pendientes(False)
 
             while ejecucion[4] > 0:
-                self.tabla_ejecucion(ejecucion, tiempo)
                 ejecucion[4] -= 1
                 self.contador += 1
+                self.tabla_ejecucion(ejecucion, tiempo)
                 QTest.qWait(1000)
 
             self.terminados.append(self.procesos.pop(0))
