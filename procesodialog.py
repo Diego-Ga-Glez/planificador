@@ -117,7 +117,7 @@ class ProcesosDialog(QDialog):
         elif num1 == "-" or num2 == "-":
             self.ui.aceptar_pushButton.setEnabled(False)
         # se comprueba si se quiere dividir entre 0
-        elif (num2 == "0" or num2 == "-0") and op == "Division":
+        elif (num2 == "0" or num2 == "-0") and (op == "Division" or op == "Residuo"):
             self.ui.aceptar_pushButton.setEnabled(False)
         elif self.validar_id():
             self.ui.aceptar_pushButton.setEnabled(False)

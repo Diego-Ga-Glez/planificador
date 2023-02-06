@@ -123,14 +123,16 @@ class Ui_MainWindow(object):
         self.gridLayout_3.addWidget(self.terminados_label, 0, 0, 1, 1)
 
         self.terminados_tableWidget = QTableWidget(self.groupBox_3)
-        if (self.terminados_tableWidget.columnCount() < 3):
-            self.terminados_tableWidget.setColumnCount(3)
+        if (self.terminados_tableWidget.columnCount() < 4):
+            self.terminados_tableWidget.setColumnCount(4)
         __qtablewidgetitem9 = QTableWidgetItem()
         self.terminados_tableWidget.setHorizontalHeaderItem(0, __qtablewidgetitem9)
         __qtablewidgetitem10 = QTableWidgetItem()
         self.terminados_tableWidget.setHorizontalHeaderItem(1, __qtablewidgetitem10)
         __qtablewidgetitem11 = QTableWidgetItem()
         self.terminados_tableWidget.setHorizontalHeaderItem(2, __qtablewidgetitem11)
+        __qtablewidgetitem12 = QTableWidgetItem()
+        self.terminados_tableWidget.setHorizontalHeaderItem(3, __qtablewidgetitem12)
         self.terminados_tableWidget.setObjectName(u"terminados_tableWidget")
 
         self.gridLayout_3.addWidget(self.terminados_tableWidget, 1, 0, 1, 1)
@@ -187,11 +189,13 @@ class Ui_MainWindow(object):
         self.groupBox_3.setTitle("")
         self.terminados_label.setText(QCoreApplication.translate("MainWindow", u"Procesos terminados", None))
         ___qtablewidgetitem9 = self.terminados_tableWidget.horizontalHeaderItem(0)
-        ___qtablewidgetitem9.setText(QCoreApplication.translate("MainWindow", u"ID", None));
+        ___qtablewidgetitem9.setText(QCoreApplication.translate("MainWindow", u"Lote", None));
         ___qtablewidgetitem10 = self.terminados_tableWidget.horizontalHeaderItem(1)
-        ___qtablewidgetitem10.setText(QCoreApplication.translate("MainWindow", u"Operaci\u00f3n", None));
+        ___qtablewidgetitem10.setText(QCoreApplication.translate("MainWindow", u"ID", None));
         ___qtablewidgetitem11 = self.terminados_tableWidget.horizontalHeaderItem(2)
-        ___qtablewidgetitem11.setText(QCoreApplication.translate("MainWindow", u"Resultado", None));
+        ___qtablewidgetitem11.setText(QCoreApplication.translate("MainWindow", u"Operaci\u00f3n", None));
+        ___qtablewidgetitem12 = self.terminados_tableWidget.horizontalHeaderItem(3)
+        ___qtablewidgetitem12.setText(QCoreApplication.translate("MainWindow", u"Resultado", None));
         self.contador_label.setText(QCoreApplication.translate("MainWindow", u"Contador general: 0", None))
     # retranslateUi
 

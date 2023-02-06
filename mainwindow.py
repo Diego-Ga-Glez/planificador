@@ -2,7 +2,7 @@ from PySide6.QtWidgets import QMainWindow, QTableWidgetItem, QHeaderView
 from PySide6.QtCore import Slot
 from PySide6.QtTest import QTest
 from copy import deepcopy
-from math import floor
+from math import floor, ceil
 
 from uipy.ui_mainwindow import Ui_MainWindow
 from numdialog import NumDialog
@@ -27,7 +27,6 @@ class MainWindow(QMainWindow):
         self.num_w = NumDialog(self)
         self.proceso_w = ProcesosDialog(self)
 
-        
         #slots
         self.ui.procesos_pushButton.clicked.connect(self.mostrar_num_window)
 
@@ -50,6 +49,7 @@ class MainWindow(QMainWindow):
         terminados.setSectionResizeMode(0,QHeaderView.Stretch)
         terminados.setSectionResizeMode(1,QHeaderView.Stretch)
         terminados.setSectionResizeMode(2,QHeaderView.Stretch)
+        terminados.setSectionResizeMode(3,QHeaderView.Stretch)
 
     def closeEvent(self, event):
         exit()
@@ -87,7 +87,7 @@ class MainWindow(QMainWindow):
          elemento
 
         '''
-        
+
         self.ui.pendientes_tableWidget.setColumnCount(2)
         if bandera:
             self.ui.pendientes_tableWidget.setRowCount(len(self.lote))
@@ -106,11 +106,10 @@ class MainWindow(QMainWindow):
                 bandera = True
     
     def proceso_ejecucion(self):
-        
         while len(self.procesos) > 0:
             '''
             Las siguientes dos lineas son para poder
-            visualizar todos los elementos de otros lotes
+            visualizar todos los elementos de otros procesos
             antes de que el primero pase a ser ejecutado
             '''
             self.tabla_pendientes(True)
@@ -166,7 +165,7 @@ class MainWindow(QMainWindow):
 
 
     def tabla_terminados(self):
-        self.ui.terminados_tableWidget.setColumnCount(3)
+        self.ui.terminados_tableWidget.setColumnCount(4)
         self.ui.terminados_tableWidget.setRowCount(len(self.terminados))
         row = 0
 
@@ -179,9 +178,14 @@ class MainWindow(QMainWindow):
             resultado = self.resultado_op(i[1], i[2], i[3])
             res_widget = QTableWidgetItem(resultado)
 
-            self.ui.terminados_tableWidget.setItem(row,0,id_widget)
-            self.ui.terminados_tableWidget.setItem(row,1,op_widget)
-            self.ui.terminados_tableWidget.setItem(row,2,res_widget)
+            indice = self.terminados.index(i) + 1
+            lote = str(ceil(indice / 4))
+            lote_widget = QTableWidgetItem(lote)
+            
+            self.ui.terminados_tableWidget.setItem(row,0,lote_widget)
+            self.ui.terminados_tableWidget.setItem(row,1,id_widget)
+            self.ui.terminados_tableWidget.setItem(row,2,op_widget)
+            self.ui.terminados_tableWidget.setItem(row,3,res_widget)
             row+=1
 
     def concatenar_op(self, operador, operando1, operando2):

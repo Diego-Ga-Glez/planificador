@@ -23,7 +23,7 @@ class Ui_ProcesoDialog(object):
     def setupUi(self, ProcesoDialog):
         if not ProcesoDialog.objectName():
             ProcesoDialog.setObjectName(u"ProcesoDialog")
-        ProcesoDialog.resize(558, 572)
+        ProcesoDialog.resize(288, 486)
         self.verticalLayout = QVBoxLayout(ProcesoDialog)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.num_proceso_label = QLabel(ProcesoDialog)

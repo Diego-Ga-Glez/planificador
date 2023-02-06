@@ -180,6 +180,11 @@
         <widget class="QTableWidget" name="terminados_tableWidget">
          <column>
           <property name="text">
+           <string>Lote</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
            <string>ID</string>
           </property>
          </column>
