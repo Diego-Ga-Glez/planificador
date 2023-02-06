@@ -1,4 +1,4 @@
-from PySide6.QtWidgets import QDialog
+from PySide6.QtWidgets import QDialog,QMessageBox
 from PySide6.QtCore import Slot
 from PySide6.QtGui import QValidator
 from uipy.ui_procesodialog import Ui_ProcesoDialog
@@ -51,17 +51,21 @@ class ProcesosDialog(QDialog):
         self.ui = Ui_ProcesoDialog()
         self.ui.setupUi(self)
 
+        # pop up
+        self.msg_box = QMessageBox()
+        self.msg_box.setIcon(QMessageBox.Warning)
+        self.msg_box.setWindowTitle('Warning')
+        
         self.ui.aceptar_pushButton.setEnabled(False)
         
         #Slots
         self.ui.aceptar_pushButton.clicked.connect(self.formulario)
-        self.ui.nombre_lineEdit.textEdited.connect(self.validar_vacio)
-        self.ui.num1_lineEdit.textEdited.connect(self.validar_vacio)
-        self.ui.num2_lineEdit.textEdited.connect(self.validar_vacio)
-        self.ui.tiempo_spinBox.valueChanged.connect(self.validar_vacio)
-        self.ui.id_lineEdit.textEdited.connect(self.validar_vacio)
-
-        self.ui.id_lineEdit.editingFinished.connect(self.validar_id)
+        self.ui.operacion_comboBox.currentTextChanged.connect(self.validar_vacio_errores)
+        self.ui.nombre_lineEdit.textEdited.connect(self.validar_vacio_errores)
+        self.ui.num1_lineEdit.textEdited.connect(self.validar_vacio_errores)
+        self.ui.num2_lineEdit.textEdited.connect(self.validar_vacio_errores)
+        self.ui.tiempo_spinBox.valueChanged.connect(self.validar_vacio_errores)
+        self.ui.id_lineEdit.textEdited.connect(self.validar_vacio_errores)
 
         # validar datos
         self.ui.nombre_lineEdit.setValidator(Letras())
@@ -69,6 +73,17 @@ class ProcesosDialog(QDialog):
         self.ui.num2_lineEdit.setValidator(NumerosE())
         self.ui.id_lineEdit.setValidator(Numeros())
 
+    # limpiar formulario
+    def limpiar(self):
+        self.ui.nombre_lineEdit.setText("")
+        self.ui.num1_lineEdit.setText("")
+        self.ui.num2_lineEdit.setText("")
+        self.ui.tiempo_spinBox.setValue(0)
+        self.ui.id_lineEdit.setText("")
+    
+    def closeEvent(self, event):
+        self.limpiar()
+    
     @Slot()
     def formulario(self):
         nombre = self.ui.nombre_lineEdit.text()
@@ -79,18 +94,12 @@ class ProcesosDialog(QDialog):
         id_f = self.ui.id_lineEdit.text()
         self.parent().procesos.append([nombre,op,num1,num2,tiempo,id_f])
 
-        # limpiar formulario
-        self.ui.nombre_lineEdit.setText("")
-        self.ui.num1_lineEdit.setText("")
-        self.ui.num2_lineEdit.setText("")
-        self.ui.tiempo_spinBox.setValue(0)
-        self.ui.id_lineEdit.setText("")
-
+        self.limpiar()
         # cerrar qdialog
         self.close()
 
     @Slot()
-    def validar_vacio(self):
+    def validar_vacio_errores(self):
         nombre = self.ui.nombre_lineEdit.text()
         op = self.ui.operacion_comboBox.currentText()
         num1 = self.ui.num1_lineEdit.text()
@@ -98,28 +107,35 @@ class ProcesosDialog(QDialog):
         tiempo = self.ui.tiempo_spinBox.value()
         id_f = self.ui.id_lineEdit.text()
 
-
-        if nombre.isspace():
+        # se comprueba que no haya campos vacios
+        if nombre == "" or num1 == "" or num2 == "" or tiempo == 0 or id_f == "":
             self.ui.aceptar_pushButton.setEnabled(False)
-        elif nombre == "" or num1 == "" or num2 == "" or tiempo == 0 or id_f == "":
+        # se comprueba que en el nombre no haya puros espacios vacios
+        elif nombre.isspace():
+            self.ui.aceptar_pushButton.setEnabled(False)
+        # se comprueba que en num1 y num2 no este unicamente el signo de menos
+        elif num1 == "-" or num2 == "-":
+            self.ui.aceptar_pushButton.setEnabled(False)
+        # se comprueba si se quiere dividir entre 0
+        elif (num2 == "0" or num2 == "-0") and op == "Division":
+            self.ui.aceptar_pushButton.setEnabled(False)
+        elif self.validar_id():
             self.ui.aceptar_pushButton.setEnabled(False)
         else:
             self.ui.aceptar_pushButton.setEnabled(True)
 
-    @Slot()
     def validar_id(self):
         id_f = self.ui.id_lineEdit.text()
         
         for i in range(len(self.parent().procesos)):
             if self.parent().procesos[i][5] == id_f:
-                self.ui.error_label.setText("ID repetido")
-                self.ui.aceptar_pushButton.setEnabled(False)
-                return
+                self.msg_box.setText("ID repetido")
+                self.msg_box.exec()
+                return True
         
         for i in range(len(self.parent().terminados)):
             if self.parent().terminados[i][5] == id_f:
-                self.ui.error_label.setText("ID repetido")
-                self.ui.aceptar_pushButton.setEnabled(False)
-                return
-
-        self.ui.error_label.setText("")
+                self.msg_box.setText("ID repetido")
+                self.msg_box.exec()
+                return True
+        return False

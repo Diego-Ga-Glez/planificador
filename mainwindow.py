@@ -23,13 +23,6 @@ class MainWindow(QMainWindow):
         self.terminados = []
         self.contador = 0
 
-        # Datos de prueba para no ingresar desde la ui
-        self.procesos.append(['Diego','Suma',6,4,3,'1'])
-        self.procesos.append(['Diana','Resta',7,3,3,'2'])
-        self.procesos.append(['Anaid','Division',5,5,2,'4'])
-        self.procesos.append(['Daniel','Suma',8,2,3,'3'])
-        self.procesos.append(['Jose','Resta',9,1,4,'6'])
-
         # interfaces graficas
         self.num_w = NumDialog(self)
         self.proceso_w = ProcesosDialog(self)
