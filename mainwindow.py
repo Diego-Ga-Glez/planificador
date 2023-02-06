@@ -27,6 +27,7 @@ class MainWindow(QMainWindow):
         self.num_w = NumDialog(self)
         self.proceso_w = ProcesosDialog(self)
 
+        
         #slots
         self.ui.procesos_pushButton.clicked.connect(self.mostrar_num_window)
 
@@ -135,7 +136,7 @@ class MainWindow(QMainWindow):
             ######################################################################
 
             # limpiar tabla
-            self.ui.proceso_tableWidget.removeColumn(0) 
+            self.ui.proceso_tableWidget.clearContents()
             self.tabla_terminados()
 
         self.ui.procesos_pushButton.setEnabled(True)
@@ -192,6 +193,8 @@ class MainWindow(QMainWindow):
             op = 'x'
         elif operador == 'Division':
             op = '/'
+        elif operador == 'Residuo':
+            op = "%"
             
         return str(operando1)+ ' ' + op + ' ' + str(operando2)
     
@@ -204,5 +207,7 @@ class MainWindow(QMainWindow):
             resultado = operando1 * operando2
         elif operador == 'Division':
             resultado = operando1 / operando2
+        elif operador == 'Residuo':
+            resultado = operando1 % operando2
         
         return str(resultado)

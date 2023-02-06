@@ -63,6 +63,7 @@ class Ui_ProcesoDialog(object):
         self.operacion_comboBox.addItem("")
         self.operacion_comboBox.addItem("")
         self.operacion_comboBox.addItem("")
+        self.operacion_comboBox.addItem("")
         self.operacion_comboBox.setObjectName(u"operacion_comboBox")
 
         self.verticalLayout_4.addWidget(self.operacion_comboBox)
@@ -160,6 +161,7 @@ class Ui_ProcesoDialog(object):
         self.operacion_comboBox.setItemText(1, QCoreApplication.translate("ProcesoDialog", u"Resta", None))
         self.operacion_comboBox.setItemText(2, QCoreApplication.translate("ProcesoDialog", u"Multiplicacion", None))
         self.operacion_comboBox.setItemText(3, QCoreApplication.translate("ProcesoDialog", u"Division", None))
+        self.operacion_comboBox.setItemText(4, QCoreApplication.translate("ProcesoDialog", u"Residuo", None))
 
         self.numeros_groupBox.setTitle("")
         self.num1_label.setText(QCoreApplication.translate("ProcesoDialog", u"Numero 1", None))
