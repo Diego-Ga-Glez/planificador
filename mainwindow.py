@@ -3,10 +3,10 @@ from PySide6.QtCore import Slot
 from PySide6.QtTest import QTest
 from copy import deepcopy
 from math import floor, ceil
+from random import choice, randint
 
 from uipy.ui_mainwindow import Ui_MainWindow
 from numdialog import NumDialog
-from procesodialog import ProcesosDialog
 
 
 class MainWindow(QMainWindow):
@@ -25,7 +25,6 @@ class MainWindow(QMainWindow):
 
         # interfaces graficas
         self.num_w = NumDialog(self)
-        self.proceso_w = ProcesosDialog(self)
 
         #slots
         self.ui.procesos_pushButton.clicked.connect(self.mostrar_num_window)
@@ -59,11 +58,21 @@ class MainWindow(QMainWindow):
         self.num_w.show()
         self.num_w.exec()
 
+        operaciones = ['Suma','Resta', 'Multiplicacion', 'Division', 'Residuo']
+
         for i in range(self.num):
-            self.proceso_w.ui.num_proceso_label.setText(str('PROCESO #' + str(i+1)))
-            self.proceso_w.show()
-            self.proceso_w.exec()
-            #self.tabla_pendientes(True)
+            op = choice(operaciones)
+            num1 = randint(0, 99)
+
+            if op == 'Division' or op == 'Residuo':
+                num2 = randint(1, 99)
+            else:
+                num2 = randint(0, 99)
+
+            tiempo = randint(5, 16)
+            id = i + 1
+
+            self.procesos.append([id,op,num1,num2,tiempo])
 
         # actualizar numero de lotes pendientes
         str_num_proc = str(floor(len(self.procesos)/4))
@@ -75,6 +84,11 @@ class MainWindow(QMainWindow):
     
     def tabla_pendientes(self, bandera):
         if len(self.lote) == 0:
+            # actualizar numero de lotes pendientes
+            str_num_proc = str(floor(len(self.procesos)/4))
+            self.ui.pendientes_label.setText('Lotes pendientes: '+ str_num_proc)
+            ######################################################################
+
             if len(self.procesos) > 4:
                 for i in range(4): self.lote.append(self.procesos[i])
             else:
@@ -97,9 +111,9 @@ class MainWindow(QMainWindow):
 
         for i in self.lote:
             if bandera:
-                nombre_widget = QTableWidgetItem(i[0])
+                id_widget = QTableWidgetItem(str(i[0]))
                 tme_widget = QTableWidgetItem(str(i[4]))
-                self.ui.pendientes_tableWidget.setItem(row,0,nombre_widget)
+                self.ui.pendientes_tableWidget.setItem(row,0,id_widget)
                 self.ui.pendientes_tableWidget.setItem(row,1,tme_widget)
                 row+=1
             else:
@@ -129,23 +143,17 @@ class MainWindow(QMainWindow):
             self.terminados.append(self.procesos.pop(0))
             self.lote.pop(0)
 
-            # actualizar numero de lotes pendientes
-            str_num_proc = str(floor(len(self.procesos)/4))
-            self.ui.pendientes_label.setText('Lotes pendientes: '+ str_num_proc)
-            ######################################################################
-
             # limpiar tabla
             self.ui.proceso_tableWidget.clearContents()
             self.tabla_terminados()
 
-        self.ui.procesos_pushButton.setEnabled(True)
+        #self.ui.procesos_pushButton.setEnabled(True)
         
     def tabla_ejecucion(self, ejecucion, tiempo):
             self.ui.proceso_tableWidget.setColumnCount(1)
-            self.ui.proceso_tableWidget.setRowCount(6)
+            self.ui.proceso_tableWidget.setRowCount(5)
 
-            id_widget = QTableWidgetItem(ejecucion[5])
-            nombre_widget = QTableWidgetItem(ejecucion[0])
+            id_widget = QTableWidgetItem(str(ejecucion[0]))
 
             operacion = self.concatenar_op(ejecucion[1], ejecucion[2], ejecucion[3])
 
@@ -155,11 +163,10 @@ class MainWindow(QMainWindow):
             restante_widget = QTableWidgetItem(str(ejecucion[4]))
 
             self.ui.proceso_tableWidget.setItem(0,0,id_widget)
-            self.ui.proceso_tableWidget.setItem(1,0,nombre_widget)
-            self.ui.proceso_tableWidget.setItem(2,0,op_widget)
-            self.ui.proceso_tableWidget.setItem(3,0,tme_widget)
-            self.ui.proceso_tableWidget.setItem(4,0,transcurrido_widget)
-            self.ui.proceso_tableWidget.setItem(5,0,restante_widget)
+            self.ui.proceso_tableWidget.setItem(1,0,op_widget)
+            self.ui.proceso_tableWidget.setItem(2,0,tme_widget)
+            self.ui.proceso_tableWidget.setItem(3,0,transcurrido_widget)
+            self.ui.proceso_tableWidget.setItem(4,0,restante_widget)
 
             self.ui.contador_label.setText('Contador general: ' + str(self.contador))
 
@@ -170,7 +177,7 @@ class MainWindow(QMainWindow):
         row = 0
 
         for i in self.terminados:
-            id_widget = QTableWidgetItem(i[5])
+            id_widget = QTableWidgetItem(str(i[0]))
 
             operacion = self.concatenar_op(i[1], i[2], i[3])
             op_widget = QTableWidgetItem(operacion)
@@ -198,7 +205,7 @@ class MainWindow(QMainWindow):
         elif operador == 'Division':
             op = '/'
         elif operador == 'Residuo':
-            op = "%"
+            op = '%'
             
         return str(operando1)+ ' ' + op + ' ' + str(operando2)
     
@@ -210,7 +217,7 @@ class MainWindow(QMainWindow):
         elif operador == 'Multiplicacion':
             resultado = operando1 * operando2
         elif operador == 'Division':
-            resultado = operando1 / operando2
+            resultado = round(operando1 / operando2, 2)
         elif operador == 'Residuo':
             resultado = operando1 % operando2
         

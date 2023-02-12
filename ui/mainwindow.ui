@@ -49,7 +49,7 @@
          </attribute>
          <column>
           <property name="text">
-           <string>Nombre</string>
+           <string>ID</string>
           </property>
          </column>
          <column>
@@ -106,11 +106,6 @@
          <row>
           <property name="text">
            <string>ID</string>
-          </property>
-         </row>
-         <row>
-          <property name="text">
-           <string>Nombre</string>
           </property>
          </row>
          <row>
