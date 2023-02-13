@@ -31,26 +31,18 @@ class MainWindow(QMainWindow):
         #slots
         self.ui.procesos_pushButton.clicked.connect(self.mostrar_num_window)
 
-        # arreglar tamaño de columnas
+        # tamaño de columnas
         pendiente = self.ui.pendientes_tableWidget.horizontalHeader()
-        pendiente.setSectionResizeMode(0,QHeaderView.Stretch)
-        pendiente.setSectionResizeMode(1,QHeaderView.Stretch)
+        pendiente.setSectionResizeMode(QHeaderView.Stretch)
 
         proceso = self.ui.proceso_tableWidget.horizontalHeader()
-        proceso.setSectionResizeMode(0,QHeaderView.Stretch)
+        proceso.setSectionResizeMode(QHeaderView.Stretch)
         proceso = self.ui.proceso_tableWidget.verticalHeader()
-        proceso.setSectionResizeMode(0,QHeaderView.Stretch)
-        proceso.setSectionResizeMode(1,QHeaderView.Stretch)
-        proceso.setSectionResizeMode(2,QHeaderView.Stretch)
-        proceso.setSectionResizeMode(3,QHeaderView.Stretch)
-        proceso.setSectionResizeMode(4,QHeaderView.Stretch)
-        proceso.setSectionResizeMode(5,QHeaderView.Stretch)
+        proceso.setSectionResizeMode(QHeaderView.Stretch)
         
         terminados = self.ui.terminados_tableWidget.horizontalHeader()
-        terminados.setSectionResizeMode(0,QHeaderView.Stretch)
-        terminados.setSectionResizeMode(1,QHeaderView.Stretch)
-        terminados.setSectionResizeMode(2,QHeaderView.Stretch)
-        terminados.setSectionResizeMode(3,QHeaderView.Stretch)
+        terminados.setSectionResizeMode(QHeaderView.Stretch)
+        
 
     def closeEvent(self, event):
         exit()
@@ -92,19 +84,19 @@ class MainWindow(QMainWindow):
         QTest.qWait(1000)
         self.proceso_ejecucion()   
     
+    # actualizar numero de lotes pendientes
+    def actualizar_lotes_pendientes(self):
+        num_proc = floor(len(self.procesos)/4)
+        if len(self.procesos) % 4 != 0:
+            self.ui.pendientes_label.setText('Lotes pendientes: '+ str(num_proc))
+        else:
+            self.ui.pendientes_label.setText('Lotes pendientes: '+ str(num_proc - 1))
+    
     def tabla_pendientes(self, bandera):
         if len(self.lote) == 0:
             if len(self.procesos) > 4:
                 for i in range(4): self.lote.append(self.procesos[i])
-
-                # actualizar numero de lotes pendientes
-                num_proc = floor(len(self.procesos)/4)
-                if len(self.procesos) % 4 != 0:
-                    self.ui.pendientes_label.setText('Lotes pendientes: '+ str(num_proc))
-                else:
-                    self.ui.pendientes_label.setText('Lotes pendientes: '+ str(num_proc - 1))
-                ######################################################################
-
+                self.actualizar_lotes_pendientes()
             else:
                 for i in range(len(self.procesos)): self.lote.append(self.procesos[i])
                 self.ui.pendientes_label.setText('Lotes pendientes: 0')
@@ -161,8 +153,6 @@ class MainWindow(QMainWindow):
             # limpiar tabla
             self.ui.proceso_tableWidget.clearContents()
             self.tabla_terminados()
-
-        #self.ui.procesos_pushButton.setEnabled(True)
         
     def tabla_ejecucion(self, ejecucion, tiempo):
             self.ui.proceso_tableWidget.setColumnCount(1)
