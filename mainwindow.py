@@ -3,7 +3,6 @@ from PySide6.QtCore import Slot, Qt
 from PySide6.QtTest import QTest
 from PySide6.QtGui import QKeyEvent
 
-from copy import deepcopy
 from math import floor, ceil
 from random import choice, randint
 
@@ -26,6 +25,7 @@ class MainWindow(QMainWindow):
         self.contador = 0
         self.pausa = False
         self.estado = True
+        self.interrupcion = True
 
         # interfaces graficas
         self.num_w = NumDialog(self)
@@ -51,7 +51,7 @@ class MainWindow(QMainWindow):
     
     def keyPressEvent(self, event: QKeyEvent):
         if event.key() == Qt.Key_I:
-            print('I')
+            self.interrupcion = False
 
         elif event.key() == Qt.Key_E:
             self.estado = False
@@ -97,7 +97,7 @@ class MainWindow(QMainWindow):
         else:
             self.ui.pendientes_label.setText('Lotes pendientes: '+ str(num_proc - 1))
     
-    def tabla_pendientes(self, bandera):
+    def tabla_pendientes(self, bandera, excluir):
         if len(self.lote) == 0:
             if len(self.procesos) > 4:
                 for i in range(4): self.lote.append(self.procesos[i])
@@ -106,61 +106,59 @@ class MainWindow(QMainWindow):
                 for i in range(len(self.procesos)): self.lote.append(self.procesos[i])
                 self.ui.pendientes_label.setText('Lotes pendientes: 0')
           
-        '''
-
-         Si la bandera es True se imprime toda la tabla
-         Si es False se imprime toda excepto el primer 
-         elemento
-
-        '''
-
+        # self.tabla_pendientes (0,-1) imprime todos y excluye el elemento -1 (no existe)
+        # self.tabla_pendientes (0,n) imprime todos menos uno y excluye el elemento n
+        
         self.ui.pendientes_tableWidget.setColumnCount(3)
-        if bandera:
-            self.ui.pendientes_tableWidget.setRowCount(len(self.lote))
-        else:
-            self.ui.pendientes_tableWidget.setRowCount(len(self.lote)-1)
+        self.ui.pendientes_tableWidget.setRowCount(len(self.lote)-bandera)
         row = 0
 
-        for i in self.lote:
-            if bandera:
-                id_widget = QTableWidgetItem(str(i[0]))
-                tme_widget = QTableWidgetItem(str(i[4]))
+        for i in range(len(self.lote)):
+            if i != excluir:
+                id_widget = QTableWidgetItem(str(self.lote[i][0]))
+                tme_widget = QTableWidgetItem(str(self.lote[i][4]))
+                tt_widget =  QTableWidgetItem(str(self.lote[i][5]))
                 self.ui.pendientes_tableWidget.setItem(row,0,id_widget)
                 self.ui.pendientes_tableWidget.setItem(row,1,tme_widget)
+                self.ui.pendientes_tableWidget.setItem(row,2,tt_widget)
+
                 row+=1
-            else:
-                bandera = True
     
     def proceso_ejecucion(self):
+        i = 0
         while len(self.procesos) > 0:
             self.estado = True
-            '''
-            Las siguientes dos lineas son para poder
-            visualizar todos los elementos de otros procesos
-            antes de que el primero pase a ser ejecutado
-            '''
-            self.tabla_pendientes(True)
+            self.interrupcion = True
+            
+            self.tabla_pendientes(0,-1)
             QTest.qWait(1000)
-            #################################################
-
-            ejecucion = self.procesos[0]
+            
+            ejecucion = self.lote[i]
             tiempo = ejecucion[5]
-            self.tabla_pendientes(False)
+            self.tabla_pendientes(1,i)
 
-            while tiempo > 0 and self.estado == True:
+            while tiempo > 0 and self.estado and self.interrupcion:
                 if self.pausa == False:
                     tiempo -= 1
+                    self.lote[i][5] -= 1
                     self.contador += 1
                 self.tabla_ejecucion(ejecucion, tiempo)
                 QTest.qWait(1000)
 
             self.procesos[0][6] = self.estado
-            self.terminados.append(self.procesos.pop(0))
-            self.lote.pop(0)
+            if self.interrupcion:
+                self.terminados.append(self.procesos.pop(0))
+                self.lote.pop(0)
 
-            # limpiar tabla
-            self.ui.proceso_tableWidget.clearContents()
-            self.tabla_terminados()
+            self.ui.proceso_tableWidget.clearContents() # limpiar tabla
+            
+            if self.interrupcion:
+                self.tabla_terminados()
+            else:
+                if i == len(self.lote)-1:
+                    i = 0
+                else:
+                    i+=1
         
     def tabla_ejecucion(self, ejecucion, tiempo):
             self.ui.proceso_tableWidget.setColumnCount(1)
