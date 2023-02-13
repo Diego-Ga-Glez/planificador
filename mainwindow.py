@@ -24,6 +24,8 @@ class MainWindow(QMainWindow):
         self.ejecucion = []          # proceso en ejecucion
         self.terminados = []
         self.contador = 0
+        self.pausa = False
+        self.estado = True
 
         # interfaces graficas
         self.num_w = NumDialog(self)
@@ -50,12 +52,15 @@ class MainWindow(QMainWindow):
     def keyPressEvent(self, event: QKeyEvent):
         if event.key() == Qt.Key_I:
             print('I')
+
         elif event.key() == Qt.Key_E:
-            print('E')
+            self.estado = False
+
         elif event.key() == Qt.Key_P:
-            print('P')
+            self.pausa = True
+            
         elif event.key() == Qt.Key_C:
-            print('C')
+            self.pausa = False
         
         return super().keyPressEvent(event)
     
@@ -78,7 +83,7 @@ class MainWindow(QMainWindow):
             tiempo = randint(5, 16)
             id = i + 1
 
-            self.procesos.append([id,op,num1,num2,tiempo])
+            self.procesos.append([id,op,num1,num2,tiempo,tiempo,self.estado])
 
         self.ui.procesos_pushButton.setEnabled(False)
         QTest.qWait(1000)
@@ -109,7 +114,7 @@ class MainWindow(QMainWindow):
 
         '''
 
-        self.ui.pendientes_tableWidget.setColumnCount(2)
+        self.ui.pendientes_tableWidget.setColumnCount(3)
         if bandera:
             self.ui.pendientes_tableWidget.setRowCount(len(self.lote))
         else:
@@ -128,6 +133,7 @@ class MainWindow(QMainWindow):
     
     def proceso_ejecucion(self):
         while len(self.procesos) > 0:
+            self.estado = True
             '''
             Las siguientes dos lineas son para poder
             visualizar todos los elementos de otros procesos
@@ -138,15 +144,17 @@ class MainWindow(QMainWindow):
             #################################################
 
             ejecucion = self.procesos[0]
-            tiempo = deepcopy(ejecucion[4])
+            tiempo = ejecucion[5]
             self.tabla_pendientes(False)
 
-            while ejecucion[4] > 0:
-                ejecucion[4] -= 1
-                self.contador += 1
+            while tiempo > 0 and self.estado == True:
+                if self.pausa == False:
+                    tiempo -= 1
+                    self.contador += 1
                 self.tabla_ejecucion(ejecucion, tiempo)
                 QTest.qWait(1000)
 
+            self.procesos[0][6] = self.estado
             self.terminados.append(self.procesos.pop(0))
             self.lote.pop(0)
 
@@ -163,9 +171,9 @@ class MainWindow(QMainWindow):
             operacion = self.concatenar_op(ejecucion[1], ejecucion[2], ejecucion[3])
 
             op_widget = QTableWidgetItem(operacion)
-            tme_widget = QTableWidgetItem(str(tiempo))
-            transcurrido_widget = QTableWidgetItem(str(tiempo-ejecucion[4]))
-            restante_widget = QTableWidgetItem(str(ejecucion[4]))
+            tme_widget = QTableWidgetItem(str(ejecucion[4]))
+            transcurrido_widget = QTableWidgetItem(str(ejecucion[4]-tiempo))
+            restante_widget = QTableWidgetItem(str(tiempo))
 
             self.ui.proceso_tableWidget.setItem(0,0,id_widget)
             self.ui.proceso_tableWidget.setItem(1,0,op_widget)
@@ -187,7 +195,11 @@ class MainWindow(QMainWindow):
             operacion = self.concatenar_op(i[1], i[2], i[3])
             op_widget = QTableWidgetItem(operacion)
 
-            resultado = self.resultado_op(i[1], i[2], i[3])
+            if i[6] == True:
+                resultado = self.resultado_op(i[1], i[2], i[3])
+            else:
+                resultado = 'ERROR'
+
             res_widget = QTableWidgetItem(resultado)
 
             indice = self.terminados.index(i) + 1
