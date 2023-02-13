@@ -1,6 +1,8 @@
 from PySide6.QtWidgets import QMainWindow, QTableWidgetItem, QHeaderView
-from PySide6.QtCore import Slot
+from PySide6.QtCore import Slot, Qt
 from PySide6.QtTest import QTest
+from PySide6.QtGui import QKeyEvent
+
 from copy import deepcopy
 from math import floor, ceil
 from random import choice, randint
@@ -53,6 +55,18 @@ class MainWindow(QMainWindow):
     def closeEvent(self, event):
         exit()
     
+    def keyPressEvent(self, event: QKeyEvent):
+        if event.key() == Qt.Key_I:
+            print('I')
+        elif event.key() == Qt.Key_E:
+            print('E')
+        elif event.key() == Qt.Key_P:
+            print('P')
+        elif event.key() == Qt.Key_C:
+            print('C')
+        
+        return super().keyPressEvent(event)
+    
     @Slot()
     def mostrar_num_window(self):
         self.num_w.show()
@@ -74,25 +88,26 @@ class MainWindow(QMainWindow):
 
             self.procesos.append([id,op,num1,num2,tiempo])
 
-        # actualizar numero de lotes pendientes
-        str_num_proc = str(floor(len(self.procesos)/4))
-        self.ui.pendientes_label.setText('Lotes pendientes: '+ str_num_proc)
-        ######################################################################
         self.ui.procesos_pushButton.setEnabled(False)
         QTest.qWait(1000)
         self.proceso_ejecucion()   
     
     def tabla_pendientes(self, bandera):
         if len(self.lote) == 0:
-            # actualizar numero de lotes pendientes
-            str_num_proc = str(floor(len(self.procesos)/4))
-            self.ui.pendientes_label.setText('Lotes pendientes: '+ str_num_proc)
-            ######################################################################
-
             if len(self.procesos) > 4:
                 for i in range(4): self.lote.append(self.procesos[i])
+
+                # actualizar numero de lotes pendientes
+                num_proc = floor(len(self.procesos)/4)
+                if len(self.procesos) % 4 != 0:
+                    self.ui.pendientes_label.setText('Lotes pendientes: '+ str(num_proc))
+                else:
+                    self.ui.pendientes_label.setText('Lotes pendientes: '+ str(num_proc - 1))
+                ######################################################################
+
             else:
                 for i in range(len(self.procesos)): self.lote.append(self.procesos[i])
+                self.ui.pendientes_label.setText('Lotes pendientes: 0')
           
         '''
 

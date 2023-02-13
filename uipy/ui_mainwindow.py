@@ -41,6 +41,7 @@ class Ui_MainWindow(object):
         __qtablewidgetitem1 = QTableWidgetItem()
         self.pendientes_tableWidget.setHorizontalHeaderItem(1, __qtablewidgetitem1)
         self.pendientes_tableWidget.setObjectName(u"pendientes_tableWidget")
+        self.pendientes_tableWidget.setEnabled(False)
         self.pendientes_tableWidget.setLayoutDirection(Qt.LeftToRight)
         self.pendientes_tableWidget.setAutoFillBackground(False)
         self.pendientes_tableWidget.horizontalHeader().setVisible(True)
@@ -93,6 +94,7 @@ class Ui_MainWindow(object):
         __qtablewidgetitem7 = QTableWidgetItem()
         self.proceso_tableWidget.setVerticalHeaderItem(4, __qtablewidgetitem7)
         self.proceso_tableWidget.setObjectName(u"proceso_tableWidget")
+        self.proceso_tableWidget.setEnabled(False)
 
         self.gridLayout.addWidget(self.proceso_tableWidget, 1, 0, 1, 1)
 
@@ -132,6 +134,7 @@ class Ui_MainWindow(object):
         __qtablewidgetitem11 = QTableWidgetItem()
         self.terminados_tableWidget.setHorizontalHeaderItem(3, __qtablewidgetitem11)
         self.terminados_tableWidget.setObjectName(u"terminados_tableWidget")
+        self.terminados_tableWidget.setEnabled(False)
 
         self.gridLayout_3.addWidget(self.terminados_tableWidget, 1, 0, 1, 1)
 
