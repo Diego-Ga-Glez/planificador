@@ -117,7 +117,7 @@ class MainWindow(QMainWindow):
             if i != excluir:
                 id_widget = QTableWidgetItem(str(self.lote[i][0]))
                 tme_widget = QTableWidgetItem(str(self.lote[i][4]))
-                tt_widget =  QTableWidgetItem(str(self.lote[i][5]))
+                tt_widget =  QTableWidgetItem(str(self.lote[i][4] - self.lote[i][5]))
                 self.ui.pendientes_tableWidget.setItem(row,0,id_widget)
                 self.ui.pendientes_tableWidget.setItem(row,1,tme_widget)
                 self.ui.pendientes_tableWidget.setItem(row,2,tt_widget)
@@ -127,6 +127,7 @@ class MainWindow(QMainWindow):
     def proceso_ejecucion(self):
         i = 0
         while len(self.procesos) > 0:
+            self.pausa = False
             self.estado = True
             self.interrupcion = True
             
@@ -145,20 +146,21 @@ class MainWindow(QMainWindow):
                 self.tabla_ejecucion(ejecucion, tiempo)
                 QTest.qWait(1000)
 
-            self.procesos[0][6] = self.estado
+            self.procesos[i][6] = self.estado
             if self.interrupcion:
-                self.terminados.append(self.procesos.pop(0))
-                self.lote.pop(0)
+                self.terminados.append(self.procesos.pop(i))
+                self.lote.pop(i)
+                i -= 1
 
             self.ui.proceso_tableWidget.clearContents() # limpiar tabla
             
             if self.interrupcion:
                 self.tabla_terminados()
+            
+            if i == len(self.lote)-1:
+                i = 0
             else:
-                if i == len(self.lote)-1:
-                    i = 0
-                else:
-                    i+=1
+                i+=1
         
     def tabla_ejecucion(self, ejecucion, tiempo):
             self.ui.proceso_tableWidget.setColumnCount(1)
