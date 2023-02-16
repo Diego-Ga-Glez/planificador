@@ -4,7 +4,6 @@ from PySide6.QtTest import QTest
 from PySide6.QtGui import QKeyEvent
 
 from math import floor, ceil
-from random import choice, randint
 
 from uipy.ui_mainwindow import Ui_MainWindow
 from numdialog import NumDialog
@@ -19,7 +18,6 @@ class MainWindow(QMainWindow):
         # variables
         self.procesos = []           # lista de procesos en total
         self.lote = []               # lote actual en ejecucion
-        self.num = 0                 # numero de ventanas para abrir
         self.ejecucion = []          # proceso en ejecucion
         self.terminados = []
         self.contador = 0
@@ -51,10 +49,12 @@ class MainWindow(QMainWindow):
     
     def keyPressEvent(self, event: QKeyEvent):
         if event.key() == Qt.Key_I:
-            self.interrupcion = False
+            if not self.pausa:
+                self.interrupcion = False
 
         elif event.key() == Qt.Key_E:
-            self.estado = False
+            if not self.pausa:
+                self.estado = False
 
         elif event.key() == Qt.Key_P:
             self.pausa = True
@@ -68,23 +68,6 @@ class MainWindow(QMainWindow):
     def mostrar_num_window(self):
         self.num_w.show()
         self.num_w.exec()
-
-        operaciones = ['Suma','Resta', 'Multiplicacion', 'Division', 'Residuo']
-
-        for i in range(self.num):
-            op = choice(operaciones)
-            num1 = randint(0, 99)
-
-            if op == 'Division' or op == 'Residuo':
-                num2 = randint(1, 99)
-            else:
-                num2 = randint(0, 99)
-
-            tiempo = randint(5, 16)
-            id = i + 1
-
-            self.procesos.append([id,op,num1,num2,tiempo,tiempo,self.estado])
-
         self.ui.procesos_pushButton.setEnabled(False)
         QTest.qWait(1000)
         self.proceso_ejecucion()   
@@ -125,7 +108,6 @@ class MainWindow(QMainWindow):
                 row+=1
     
     def proceso_ejecucion(self):
-        i = 0
         while len(self.procesos) > 0:
             self.pausa = False
             self.estado = True
@@ -134,33 +116,29 @@ class MainWindow(QMainWindow):
             self.tabla_pendientes(0,-1)
             QTest.qWait(1000)
             
-            ejecucion = self.lote[i]
+            ejecucion = self.lote[0]
             tiempo = ejecucion[5]
-            self.tabla_pendientes(1,i)
+            self.tabla_pendientes(1,0)
 
             while tiempo > 0 and self.estado and self.interrupcion:
                 if self.pausa == False:
                     tiempo -= 1
-                    self.lote[i][5] -= 1
+                    self.lote[0][5] -= 1
                     self.contador += 1
                 self.tabla_ejecucion(ejecucion, tiempo)
                 QTest.qWait(1000)
 
-            self.procesos[i][6] = self.estado
+            self.lote[0][6] = self.estado
             if self.interrupcion:
-                self.terminados.append(self.procesos.pop(i))
-                self.lote.pop(i)
-                i -= 1
+                self.terminados.append(self.procesos.pop(0))
+                self.lote.pop(0)
 
             self.ui.proceso_tableWidget.clearContents() # limpiar tabla
             
             if self.interrupcion:
                 self.tabla_terminados()
-            
-            if i == len(self.lote)-1:
-                i = 0
             else:
-                i+=1
+                self.lote.append(self.lote.pop(0))
         
     def tabla_ejecucion(self, ejecucion, tiempo):
             self.ui.proceso_tableWidget.setColumnCount(1)
