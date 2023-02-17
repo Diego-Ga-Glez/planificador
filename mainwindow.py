@@ -130,8 +130,9 @@ class MainWindow(QMainWindow):
 
             self.lote[0][6] = self.estado
             if self.interrupcion:
-                self.terminados.append(self.procesos.pop(0))
-                self.lote.pop(0)
+                self.procesos.remove(self.lote[0])
+                self.terminados.append(self.lote.pop(0))
+                
 
             self.ui.proceso_tableWidget.clearContents() # limpiar tabla
             
