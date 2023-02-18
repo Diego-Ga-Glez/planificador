@@ -6,12 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>195</width>
+    <width>174</width>
     <height>185</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Procesos</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: #f1e4e8;</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -31,13 +34,23 @@
        </widget>
       </item>
       <item>
-       <widget class="QSpinBox" name="numero_spinBox"/>
+       <widget class="QSpinBox" name="numero_spinBox">
+        <property name="styleSheet">
+         <string notr="true">background-color: white;</string>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>
    </item>
    <item>
     <widget class="QDialogButtonBox" name="num_aceptar_buttonBox">
+     <property name="layoutDirection">
+      <enum>Qt::LeftToRight</enum>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #dda1b6;</string>
+     </property>
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>

@@ -23,7 +23,8 @@ class Ui_NumDialog(object):
     def setupUi(self, NumDialog):
         if not NumDialog.objectName():
             NumDialog.setObjectName(u"NumDialog")
-        NumDialog.resize(195, 185)
+        NumDialog.resize(174, 185)
+        NumDialog.setStyleSheet(u"background-color: #f1e4e8;")
         self.verticalLayout = QVBoxLayout(NumDialog)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.numero_groupBox = QGroupBox(NumDialog)
@@ -38,6 +39,7 @@ class Ui_NumDialog(object):
 
         self.numero_spinBox = QSpinBox(self.numero_groupBox)
         self.numero_spinBox.setObjectName(u"numero_spinBox")
+        self.numero_spinBox.setStyleSheet(u"background-color: white;")
 
         self.verticalLayout_2.addWidget(self.numero_spinBox)
 
@@ -46,6 +48,8 @@ class Ui_NumDialog(object):
 
         self.num_aceptar_buttonBox = QDialogButtonBox(NumDialog)
         self.num_aceptar_buttonBox.setObjectName(u"num_aceptar_buttonBox")
+        self.num_aceptar_buttonBox.setLayoutDirection(Qt.LeftToRight)
+        self.num_aceptar_buttonBox.setStyleSheet(u"background-color: #dda1b6;")
         self.num_aceptar_buttonBox.setOrientation(Qt.Horizontal)
         self.num_aceptar_buttonBox.setStandardButtons(QDialogButtonBox.Cancel|QDialogButtonBox.Ok)
 
@@ -60,7 +64,7 @@ class Ui_NumDialog(object):
     # setupUi
 
     def retranslateUi(self, NumDialog):
-        NumDialog.setWindowTitle(QCoreApplication.translate("NumDialog", u"Dialog", None))
+        NumDialog.setWindowTitle(QCoreApplication.translate("NumDialog", u"Procesos", None))
         self.numero_groupBox.setTitle("")
         self.numero_label.setText(QCoreApplication.translate("NumDialog", u"N\u00famero de procesos", None))
     # retranslateUi

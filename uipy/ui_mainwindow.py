@@ -25,6 +25,27 @@ class Ui_MainWindow(object):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
         MainWindow.resize(939, 600)
+        palette = QPalette()
+        brush = QBrush(QColor(241, 228, 232, 255))
+        brush.setStyle(Qt.SolidPattern)
+        palette.setBrush(QPalette.Active, QPalette.Button, brush)
+        brush1 = QBrush(QColor(0, 0, 0, 255))
+        brush1.setStyle(Qt.SolidPattern)
+        palette.setBrush(QPalette.Active, QPalette.ButtonText, brush1)
+        palette.setBrush(QPalette.Active, QPalette.Base, brush)
+        palette.setBrush(QPalette.Active, QPalette.Window, brush)
+        palette.setBrush(QPalette.Inactive, QPalette.Button, brush)
+        palette.setBrush(QPalette.Inactive, QPalette.ButtonText, brush1)
+        palette.setBrush(QPalette.Inactive, QPalette.Base, brush)
+        palette.setBrush(QPalette.Inactive, QPalette.Window, brush)
+        palette.setBrush(QPalette.Disabled, QPalette.Button, brush)
+        brush2 = QBrush(QColor(120, 120, 120, 255))
+        brush2.setStyle(Qt.SolidPattern)
+        palette.setBrush(QPalette.Disabled, QPalette.ButtonText, brush2)
+        palette.setBrush(QPalette.Disabled, QPalette.Base, brush)
+        palette.setBrush(QPalette.Disabled, QPalette.Window, brush)
+        MainWindow.setPalette(palette)
+        MainWindow.setStyleSheet(u"background-color: #f1e4e8;")
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.gridLayout_4 = QGridLayout(self.centralwidget)
@@ -46,6 +67,7 @@ class Ui_MainWindow(object):
         self.pendientes_tableWidget.setEnabled(False)
         self.pendientes_tableWidget.setLayoutDirection(Qt.LeftToRight)
         self.pendientes_tableWidget.setAutoFillBackground(False)
+        self.pendientes_tableWidget.setStyleSheet(u"background-color: white;")
         self.pendientes_tableWidget.horizontalHeader().setVisible(True)
         self.pendientes_tableWidget.horizontalHeader().setCascadingSectionResizes(False)
         self.pendientes_tableWidget.horizontalHeader().setStretchLastSection(False)
@@ -97,11 +119,47 @@ class Ui_MainWindow(object):
         self.proceso_tableWidget.setVerticalHeaderItem(4, __qtablewidgetitem8)
         self.proceso_tableWidget.setObjectName(u"proceso_tableWidget")
         self.proceso_tableWidget.setEnabled(False)
+        self.proceso_tableWidget.setStyleSheet(u"background-color: white;")
 
         self.gridLayout.addWidget(self.proceso_tableWidget, 1, 0, 1, 1)
 
         self.procesos_pushButton = QPushButton(self.groupBox)
         self.procesos_pushButton.setObjectName(u"procesos_pushButton")
+        palette1 = QPalette()
+        palette1.setBrush(QPalette.Active, QPalette.WindowText, brush1)
+        brush3 = QBrush(QColor(221, 161, 182, 255))
+        brush3.setStyle(Qt.SolidPattern)
+        palette1.setBrush(QPalette.Active, QPalette.Button, brush3)
+        palette1.setBrush(QPalette.Active, QPalette.Text, brush1)
+        palette1.setBrush(QPalette.Active, QPalette.ButtonText, brush1)
+        palette1.setBrush(QPalette.Active, QPalette.Base, brush3)
+        palette1.setBrush(QPalette.Active, QPalette.Window, brush3)
+        brush4 = QBrush(QColor(0, 0, 0, 128))
+        brush4.setStyle(Qt.SolidPattern)
+#if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
+        palette1.setBrush(QPalette.Active, QPalette.PlaceholderText, brush4)
+#endif
+        palette1.setBrush(QPalette.Inactive, QPalette.WindowText, brush1)
+        palette1.setBrush(QPalette.Inactive, QPalette.Button, brush3)
+        palette1.setBrush(QPalette.Inactive, QPalette.Text, brush1)
+        palette1.setBrush(QPalette.Inactive, QPalette.ButtonText, brush1)
+        palette1.setBrush(QPalette.Inactive, QPalette.Base, brush3)
+        palette1.setBrush(QPalette.Inactive, QPalette.Window, brush3)
+#if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
+        palette1.setBrush(QPalette.Inactive, QPalette.PlaceholderText, brush4)
+#endif
+        palette1.setBrush(QPalette.Disabled, QPalette.WindowText, brush1)
+        palette1.setBrush(QPalette.Disabled, QPalette.Button, brush3)
+        palette1.setBrush(QPalette.Disabled, QPalette.Text, brush1)
+        palette1.setBrush(QPalette.Disabled, QPalette.ButtonText, brush1)
+        palette1.setBrush(QPalette.Disabled, QPalette.Base, brush3)
+        palette1.setBrush(QPalette.Disabled, QPalette.Window, brush3)
+#if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
+        palette1.setBrush(QPalette.Disabled, QPalette.PlaceholderText, brush4)
+#endif
+        self.procesos_pushButton.setPalette(palette1)
+        self.procesos_pushButton.setStyleSheet(u"background-color: #dda1b6;\n"
+"color: black;")
 
         self.gridLayout.addWidget(self.procesos_pushButton, 3, 0, 1, 1)
 
@@ -137,6 +195,7 @@ class Ui_MainWindow(object):
         self.terminados_tableWidget.setHorizontalHeaderItem(3, __qtablewidgetitem12)
         self.terminados_tableWidget.setObjectName(u"terminados_tableWidget")
         self.terminados_tableWidget.setEnabled(False)
+        self.terminados_tableWidget.setStyleSheet(u"background-color: white;")
 
         self.gridLayout_3.addWidget(self.terminados_tableWidget, 1, 0, 1, 1)
 
@@ -164,7 +223,7 @@ class Ui_MainWindow(object):
     # setupUi
 
     def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
+        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"Planificador", None))
         self.groupBox_2.setTitle("")
         ___qtablewidgetitem = self.pendientes_tableWidget.horizontalHeaderItem(0)
         ___qtablewidgetitem.setText(QCoreApplication.translate("MainWindow", u"ID", None));
