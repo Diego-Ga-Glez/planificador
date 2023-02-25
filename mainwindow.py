@@ -117,9 +117,6 @@ class MainWindow(QMainWindow):
                 self.estado = True
                 self.interrupcion = True
                 
-                self.tabla_pendientes(0,-1)
-                QTest.qWait(1000)
-                
                 ejecucion = self.lote[0]
                 tiempo = ejecucion[5]
                 self.tabla_pendientes(1,0)
@@ -135,6 +132,7 @@ class MainWindow(QMainWindow):
 
                 self.lote[0][6] = self.estado
                 self.ui.proceso_tableWidget.clearContents() # limpiar tabla
+
                 if self.interrupcion:
                     self.terminados.append(self.lote.pop(0))
                     self.tabla_terminados()
@@ -145,25 +143,18 @@ class MainWindow(QMainWindow):
                     self.contador += 1
                     self.ui.contador_label.setText('Contador general: ' + str(self.contador))
                     self.tabla_bloqueados()
+                    self.tabla_pendientes(0,-1)
                 QTest.qWait(1000)
 
-        
-    
     def tabla_bloqueados(self):
-        num = []
-        aux = []
+        num = None
         for i in range(len(self.bloqueados)):
-            if self.bloqueados[i][7] == 10:
-                self.bloqueados[i][7] = 0
-                num.append(i)
- 
-        for i in reversed(num):
-            aux.append(self.bloqueados.pop(i))
+            if self.bloqueados[i][7] == 15:
+                num = i
 
-        aux.reverse()
-        self.lote = self.lote + aux
-
-        if num:
+        if num != None:
+            self.bloqueados[num][7] = 0
+            self.lote.append(self.bloqueados.pop(num))
             self.tabla_pendientes(1,0)
 
         self.ui.bloqueados_tableWidget.setColumnCount(2)
