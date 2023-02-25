@@ -70,6 +70,7 @@ class Ui_MainWindow(object):
         self.pendientes_tableWidget.setStyleSheet(u"background-color: white;")
         self.pendientes_tableWidget.horizontalHeader().setVisible(True)
         self.pendientes_tableWidget.horizontalHeader().setCascadingSectionResizes(False)
+        self.pendientes_tableWidget.horizontalHeader().setDefaultSectionSize(100)
         self.pendientes_tableWidget.horizontalHeader().setStretchLastSection(False)
         self.pendientes_tableWidget.verticalHeader().setCascadingSectionResizes(False)
         self.pendientes_tableWidget.verticalHeader().setProperty("showSortIndicator", False)
@@ -77,17 +78,36 @@ class Ui_MainWindow(object):
 
         self.gridLayout_2.addWidget(self.pendientes_tableWidget, 1, 0, 1, 1)
 
-        self.pendientes_label = QLabel(self.groupBox_2)
-        self.pendientes_label.setObjectName(u"pendientes_label")
-        self.pendientes_label.setAlignment(Qt.AlignCenter)
-
-        self.gridLayout_2.addWidget(self.pendientes_label, 2, 0, 1, 1)
-
         self.actual_label = QLabel(self.groupBox_2)
         self.actual_label.setObjectName(u"actual_label")
         self.actual_label.setAlignment(Qt.AlignCenter)
 
         self.gridLayout_2.addWidget(self.actual_label, 0, 0, 1, 1)
+
+        self.pendientes_label = QLabel(self.groupBox_2)
+        self.pendientes_label.setObjectName(u"pendientes_label")
+        self.pendientes_label.setAlignment(Qt.AlignCenter)
+
+        self.gridLayout_2.addWidget(self.pendientes_label, 4, 0, 1, 1)
+
+        self.bloqueados_tableWidget = QTableWidget(self.groupBox_2)
+        if (self.bloqueados_tableWidget.columnCount() < 2):
+            self.bloqueados_tableWidget.setColumnCount(2)
+        __qtablewidgetitem3 = QTableWidgetItem()
+        self.bloqueados_tableWidget.setHorizontalHeaderItem(0, __qtablewidgetitem3)
+        __qtablewidgetitem4 = QTableWidgetItem()
+        self.bloqueados_tableWidget.setHorizontalHeaderItem(1, __qtablewidgetitem4)
+        self.bloqueados_tableWidget.setObjectName(u"bloqueados_tableWidget")
+        self.bloqueados_tableWidget.setEnabled(False)
+        self.bloqueados_tableWidget.horizontalHeader().setDefaultSectionSize(140)
+
+        self.gridLayout_2.addWidget(self.bloqueados_tableWidget, 3, 0, 1, 1)
+
+        self.bloqueados_label = QLabel(self.groupBox_2)
+        self.bloqueados_label.setObjectName(u"bloqueados_label")
+        self.bloqueados_label.setAlignment(Qt.AlignCenter)
+
+        self.gridLayout_2.addWidget(self.bloqueados_label, 2, 0, 1, 1)
 
 
         self.gridLayout_4.addWidget(self.groupBox_2, 0, 0, 1, 1)
@@ -103,23 +123,25 @@ class Ui_MainWindow(object):
         self.proceso_tableWidget = QTableWidget(self.groupBox)
         if (self.proceso_tableWidget.columnCount() < 1):
             self.proceso_tableWidget.setColumnCount(1)
-        __qtablewidgetitem3 = QTableWidgetItem()
-        self.proceso_tableWidget.setHorizontalHeaderItem(0, __qtablewidgetitem3)
+        __qtablewidgetitem5 = QTableWidgetItem()
+        self.proceso_tableWidget.setHorizontalHeaderItem(0, __qtablewidgetitem5)
         if (self.proceso_tableWidget.rowCount() < 5):
             self.proceso_tableWidget.setRowCount(5)
-        __qtablewidgetitem4 = QTableWidgetItem()
-        self.proceso_tableWidget.setVerticalHeaderItem(0, __qtablewidgetitem4)
-        __qtablewidgetitem5 = QTableWidgetItem()
-        self.proceso_tableWidget.setVerticalHeaderItem(1, __qtablewidgetitem5)
         __qtablewidgetitem6 = QTableWidgetItem()
-        self.proceso_tableWidget.setVerticalHeaderItem(2, __qtablewidgetitem6)
+        self.proceso_tableWidget.setVerticalHeaderItem(0, __qtablewidgetitem6)
         __qtablewidgetitem7 = QTableWidgetItem()
-        self.proceso_tableWidget.setVerticalHeaderItem(3, __qtablewidgetitem7)
+        self.proceso_tableWidget.setVerticalHeaderItem(1, __qtablewidgetitem7)
         __qtablewidgetitem8 = QTableWidgetItem()
-        self.proceso_tableWidget.setVerticalHeaderItem(4, __qtablewidgetitem8)
+        self.proceso_tableWidget.setVerticalHeaderItem(2, __qtablewidgetitem8)
+        __qtablewidgetitem9 = QTableWidgetItem()
+        self.proceso_tableWidget.setVerticalHeaderItem(3, __qtablewidgetitem9)
+        __qtablewidgetitem10 = QTableWidgetItem()
+        self.proceso_tableWidget.setVerticalHeaderItem(4, __qtablewidgetitem10)
         self.proceso_tableWidget.setObjectName(u"proceso_tableWidget")
         self.proceso_tableWidget.setEnabled(False)
         self.proceso_tableWidget.setStyleSheet(u"background-color: white;")
+        self.proceso_tableWidget.horizontalHeader().setDefaultSectionSize(160)
+        self.proceso_tableWidget.verticalHeader().setDefaultSectionSize(41)
 
         self.gridLayout.addWidget(self.proceso_tableWidget, 1, 0, 1, 1)
 
@@ -185,17 +207,18 @@ class Ui_MainWindow(object):
         self.terminados_tableWidget = QTableWidget(self.groupBox_3)
         if (self.terminados_tableWidget.columnCount() < 4):
             self.terminados_tableWidget.setColumnCount(4)
-        __qtablewidgetitem9 = QTableWidgetItem()
-        self.terminados_tableWidget.setHorizontalHeaderItem(0, __qtablewidgetitem9)
-        __qtablewidgetitem10 = QTableWidgetItem()
-        self.terminados_tableWidget.setHorizontalHeaderItem(1, __qtablewidgetitem10)
         __qtablewidgetitem11 = QTableWidgetItem()
-        self.terminados_tableWidget.setHorizontalHeaderItem(2, __qtablewidgetitem11)
+        self.terminados_tableWidget.setHorizontalHeaderItem(0, __qtablewidgetitem11)
         __qtablewidgetitem12 = QTableWidgetItem()
-        self.terminados_tableWidget.setHorizontalHeaderItem(3, __qtablewidgetitem12)
+        self.terminados_tableWidget.setHorizontalHeaderItem(1, __qtablewidgetitem12)
+        __qtablewidgetitem13 = QTableWidgetItem()
+        self.terminados_tableWidget.setHorizontalHeaderItem(2, __qtablewidgetitem13)
+        __qtablewidgetitem14 = QTableWidgetItem()
+        self.terminados_tableWidget.setHorizontalHeaderItem(3, __qtablewidgetitem14)
         self.terminados_tableWidget.setObjectName(u"terminados_tableWidget")
         self.terminados_tableWidget.setEnabled(False)
         self.terminados_tableWidget.setStyleSheet(u"background-color: white;")
+        self.terminados_tableWidget.horizontalHeader().setDefaultSectionSize(95)
 
         self.gridLayout_3.addWidget(self.terminados_tableWidget, 1, 0, 1, 1)
 
@@ -231,33 +254,38 @@ class Ui_MainWindow(object):
         ___qtablewidgetitem1.setText(QCoreApplication.translate("MainWindow", u"TME", None));
         ___qtablewidgetitem2 = self.pendientes_tableWidget.horizontalHeaderItem(2)
         ___qtablewidgetitem2.setText(QCoreApplication.translate("MainWindow", u"TT", None));
-        self.pendientes_label.setText(QCoreApplication.translate("MainWindow", u"Lotes pendientes: 0", None))
-        self.actual_label.setText(QCoreApplication.translate("MainWindow", u"Lote actual", None))
+        self.actual_label.setText(QCoreApplication.translate("MainWindow", u"Procesos listos", None))
+        self.pendientes_label.setText(QCoreApplication.translate("MainWindow", u"Numero de procesos nuevos: 0", None))
+        ___qtablewidgetitem3 = self.bloqueados_tableWidget.horizontalHeaderItem(0)
+        ___qtablewidgetitem3.setText(QCoreApplication.translate("MainWindow", u"ID", None));
+        ___qtablewidgetitem4 = self.bloqueados_tableWidget.horizontalHeaderItem(1)
+        ___qtablewidgetitem4.setText(QCoreApplication.translate("MainWindow", u"Tiempo Bloqueado", None));
+        self.bloqueados_label.setText(QCoreApplication.translate("MainWindow", u"Procesos bloqueados", None))
         self.groupBox.setTitle("")
-        ___qtablewidgetitem3 = self.proceso_tableWidget.horizontalHeaderItem(0)
-        ___qtablewidgetitem3.setText(QCoreApplication.translate("MainWindow", u"Datos", None));
-        ___qtablewidgetitem4 = self.proceso_tableWidget.verticalHeaderItem(0)
-        ___qtablewidgetitem4.setText(QCoreApplication.translate("MainWindow", u"ID", None));
-        ___qtablewidgetitem5 = self.proceso_tableWidget.verticalHeaderItem(1)
-        ___qtablewidgetitem5.setText(QCoreApplication.translate("MainWindow", u"Operaci\u00f3n", None));
-        ___qtablewidgetitem6 = self.proceso_tableWidget.verticalHeaderItem(2)
-        ___qtablewidgetitem6.setText(QCoreApplication.translate("MainWindow", u"TME", None));
-        ___qtablewidgetitem7 = self.proceso_tableWidget.verticalHeaderItem(3)
-        ___qtablewidgetitem7.setText(QCoreApplication.translate("MainWindow", u"Tiempo transcurrido", None));
-        ___qtablewidgetitem8 = self.proceso_tableWidget.verticalHeaderItem(4)
-        ___qtablewidgetitem8.setText(QCoreApplication.translate("MainWindow", u"Tiempo restante", None));
+        ___qtablewidgetitem5 = self.proceso_tableWidget.horizontalHeaderItem(0)
+        ___qtablewidgetitem5.setText(QCoreApplication.translate("MainWindow", u"Datos", None));
+        ___qtablewidgetitem6 = self.proceso_tableWidget.verticalHeaderItem(0)
+        ___qtablewidgetitem6.setText(QCoreApplication.translate("MainWindow", u"ID", None));
+        ___qtablewidgetitem7 = self.proceso_tableWidget.verticalHeaderItem(1)
+        ___qtablewidgetitem7.setText(QCoreApplication.translate("MainWindow", u"Operaci\u00f3n", None));
+        ___qtablewidgetitem8 = self.proceso_tableWidget.verticalHeaderItem(2)
+        ___qtablewidgetitem8.setText(QCoreApplication.translate("MainWindow", u"TME", None));
+        ___qtablewidgetitem9 = self.proceso_tableWidget.verticalHeaderItem(3)
+        ___qtablewidgetitem9.setText(QCoreApplication.translate("MainWindow", u"Tiempo transcurrido", None));
+        ___qtablewidgetitem10 = self.proceso_tableWidget.verticalHeaderItem(4)
+        ___qtablewidgetitem10.setText(QCoreApplication.translate("MainWindow", u"Tiempo restante", None));
         self.procesos_pushButton.setText(QCoreApplication.translate("MainWindow", u"Iniciar Procesos", None))
         self.proceso_label.setText(QCoreApplication.translate("MainWindow", u"Proceso en ejecuci\u00f3n", None))
         self.groupBox_3.setTitle("")
         self.terminados_label.setText(QCoreApplication.translate("MainWindow", u"Procesos terminados", None))
-        ___qtablewidgetitem9 = self.terminados_tableWidget.horizontalHeaderItem(0)
-        ___qtablewidgetitem9.setText(QCoreApplication.translate("MainWindow", u"Lote", None));
-        ___qtablewidgetitem10 = self.terminados_tableWidget.horizontalHeaderItem(1)
-        ___qtablewidgetitem10.setText(QCoreApplication.translate("MainWindow", u"ID", None));
-        ___qtablewidgetitem11 = self.terminados_tableWidget.horizontalHeaderItem(2)
-        ___qtablewidgetitem11.setText(QCoreApplication.translate("MainWindow", u"Operaci\u00f3n", None));
-        ___qtablewidgetitem12 = self.terminados_tableWidget.horizontalHeaderItem(3)
-        ___qtablewidgetitem12.setText(QCoreApplication.translate("MainWindow", u"Resultado", None));
+        ___qtablewidgetitem11 = self.terminados_tableWidget.horizontalHeaderItem(0)
+        ___qtablewidgetitem11.setText(QCoreApplication.translate("MainWindow", u"Lote", None));
+        ___qtablewidgetitem12 = self.terminados_tableWidget.horizontalHeaderItem(1)
+        ___qtablewidgetitem12.setText(QCoreApplication.translate("MainWindow", u"ID", None));
+        ___qtablewidgetitem13 = self.terminados_tableWidget.horizontalHeaderItem(2)
+        ___qtablewidgetitem13.setText(QCoreApplication.translate("MainWindow", u"Operaci\u00f3n", None));
+        ___qtablewidgetitem14 = self.terminados_tableWidget.horizontalHeaderItem(3)
+        ___qtablewidgetitem14.setText(QCoreApplication.translate("MainWindow", u"Resultado", None));
         self.contador_label.setText(QCoreApplication.translate("MainWindow", u"Contador general: 0", None))
     # retranslateUi
 

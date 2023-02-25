@@ -162,6 +162,9 @@
          <attribute name="horizontalHeaderCascadingSectionResizes">
           <bool>false</bool>
          </attribute>
+         <attribute name="horizontalHeaderDefaultSectionSize">
+          <number>100</number>
+         </attribute>
          <attribute name="horizontalHeaderStretchLastSection">
           <bool>false</bool>
          </attribute>
@@ -191,20 +194,50 @@
          </column>
         </widget>
        </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="pendientes_label">
+       <item row="0" column="0">
+        <widget class="QLabel" name="actual_label">
          <property name="text">
-          <string>Lotes pendientes: 0</string>
+          <string>Procesos listos</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
          </property>
         </widget>
        </item>
-       <item row="0" column="0">
-        <widget class="QLabel" name="actual_label">
+       <item row="4" column="0">
+        <widget class="QLabel" name="pendientes_label">
          <property name="text">
-          <string>Lote actual</string>
+          <string>Numero de procesos nuevos: 0</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QTableWidget" name="bloqueados_tableWidget">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <attribute name="horizontalHeaderDefaultSectionSize">
+          <number>140</number>
+         </attribute>
+         <column>
+          <property name="text">
+           <string>ID</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Tiempo Bloqueado</string>
+          </property>
+         </column>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="bloqueados_label">
+         <property name="text">
+          <string>Procesos bloqueados</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
@@ -241,6 +274,12 @@
          <property name="styleSheet">
           <string notr="true">background-color: white;</string>
          </property>
+         <attribute name="horizontalHeaderDefaultSectionSize">
+          <number>160</number>
+         </attribute>
+         <attribute name="verticalHeaderDefaultSectionSize">
+          <number>41</number>
+         </attribute>
          <row>
           <property name="text">
            <string>ID</string>
@@ -520,6 +559,9 @@ color: black;</string>
          <property name="styleSheet">
           <string notr="true">background-color: white;</string>
          </property>
+         <attribute name="horizontalHeaderDefaultSectionSize">
+          <number>95</number>
+         </attribute>
          <column>
           <property name="text">
            <string>Lote</string>

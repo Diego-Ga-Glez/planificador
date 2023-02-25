@@ -30,4 +30,5 @@ class NumDialog(QDialog):
             tiempo = randint(5, 16)
             id = i + 1
 
-            self.parent().procesos.append([id,op,num1,num2,tiempo,tiempo,self.parent().estado])
+            # id, op, num1, num2, TM, TT, estado, TB
+            self.parent().procesos.append([id,op,num1,num2,tiempo,tiempo,self.parent().estado,0])

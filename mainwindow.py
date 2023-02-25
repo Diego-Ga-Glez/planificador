@@ -17,7 +17,11 @@ class MainWindow(QMainWindow):
 
         # variables
         self.procesos = []           # lista de procesos en total
+        
         self.lote = []               # lote actual en ejecucion
+        self.bloqueados = []
+        self.num = 0
+
         self.ejecucion = []          # proceso en ejecucion
         self.terminados = []
         self.contador = 0
@@ -35,6 +39,9 @@ class MainWindow(QMainWindow):
         pendiente = self.ui.pendientes_tableWidget.horizontalHeader()
         pendiente.setSectionResizeMode(QHeaderView.Stretch)
 
+        bloqueados = self.ui.bloqueados_tableWidget.horizontalHeader()
+        bloqueados.setSectionResizeMode(QHeaderView.Stretch)
+
         proceso = self.ui.proceso_tableWidget.horizontalHeader()
         proceso.setSectionResizeMode(QHeaderView.Stretch)
         proceso = self.ui.proceso_tableWidget.verticalHeader()
@@ -42,7 +49,6 @@ class MainWindow(QMainWindow):
         
         terminados = self.ui.terminados_tableWidget.horizontalHeader()
         terminados.setSectionResizeMode(QHeaderView.Stretch)
-        
 
     def closeEvent(self, event):
         exit()
@@ -70,27 +76,24 @@ class MainWindow(QMainWindow):
         self.num_w.exec()
         self.ui.procesos_pushButton.setEnabled(False)
         QTest.qWait(1000)
+
+        if len(self.procesos) > 4:
+            for i in range(4): self.lote.append(self.procesos.pop(0))
+        else:
+            for i in range(len(self.procesos)): self.lote.append(self.procesos.pop(0))
+
         self.proceso_ejecucion()   
     
-    # actualizar numero de lotes pendientes
-    def actualizar_lotes_pendientes(self):
-        num_proc = floor(len(self.procesos)/4)
-        if len(self.procesos) % 4 != 0:
-            self.ui.pendientes_label.setText('Lotes pendientes: '+ str(num_proc))
-        else:
-            self.ui.pendientes_label.setText('Lotes pendientes: '+ str(num_proc - 1))
     
     def tabla_pendientes(self, bandera, excluir):
-        if len(self.lote) == 0:
-            if len(self.procesos) > 4:
-                for i in range(4): self.lote.append(self.procesos[i])
-                self.actualizar_lotes_pendientes()
-            else:
-                for i in range(len(self.procesos)): self.lote.append(self.procesos[i])
-                self.ui.pendientes_label.setText('Lotes pendientes: 0')
+        if len(self.procesos) > 0:
+            if len(self.lote) + len(self.bloqueados) != 4:
+                self.lote.append(self.procesos.pop(0))
+        
+        self.ui.pendientes_label.setText('Numero de procesos nuevos: ' + str(len(self.procesos)))
           
         # self.tabla_pendientes (0,-1) imprime todos y excluye el elemento -1 (no existe)
-        # self.tabla_pendientes (0,n) imprime todos menos uno y excluye el elemento n
+        # self.tabla_pendientes (1,n) imprime todos menos uno y excluye el elemento n
         
         self.ui.pendientes_tableWidget.setColumnCount(3)
         self.ui.pendientes_tableWidget.setRowCount(len(self.lote)-bandera)
@@ -108,39 +111,69 @@ class MainWindow(QMainWindow):
                 row+=1
     
     def proceso_ejecucion(self):
-        while len(self.procesos) > 0:
-            self.pausa = False
-            self.estado = True
-            self.interrupcion = True
-            
-            self.tabla_pendientes(0,-1)
-            QTest.qWait(1000)
-            
-            ejecucion = self.lote[0]
-            tiempo = ejecucion[5]
-            self.tabla_pendientes(1,0)
-
-            while tiempo > 0 and self.estado and self.interrupcion:
-                if self.pausa == False:
-                    tiempo -= 1
-                    self.lote[0][5] -= 1
-                    self.contador += 1
-                self.tabla_ejecucion(ejecucion, tiempo)
-                QTest.qWait(1000)
-
-            self.lote[0][6] = self.estado
-            if self.interrupcion:
-                self.procesos.remove(self.lote[0])
-                self.terminados.append(self.lote.pop(0))
+        while len(self.lote) + len(self.bloqueados) > 0:
+            if len(self.lote) != 0:
+                self.pausa = False
+                self.estado = True
+                self.interrupcion = True
                 
+                self.tabla_pendientes(0,-1)
+                QTest.qWait(1000)
+                
+                ejecucion = self.lote[0]
+                tiempo = ejecucion[5]
+                self.tabla_pendientes(1,0)
 
-            self.ui.proceso_tableWidget.clearContents() # limpiar tabla
-            
-            if self.interrupcion:
-                self.tabla_terminados()
+                while tiempo > 0 and self.estado and self.interrupcion:
+                    if self.pausa == False:
+                        tiempo -= 1
+                        self.lote[0][5] -= 1
+                        self.contador += 1
+                        self.tabla_ejecucion(ejecucion, tiempo)
+                        self.tabla_bloqueados()
+                    QTest.qWait(1000)
+
+                self.lote[0][6] = self.estado
+
+                if self.interrupcion:
+                    self.terminados.append(self.lote.pop(0))
+                    self.tabla_terminados()
+                else:
+                    self.bloqueados.append(self.lote.pop(0))
+
+                self.ui.proceso_tableWidget.clearContents() # limpiar tabla
             else:
-                self.lote.append(self.lote.pop(0))
+                if self.pausa == False:
+                    self.contador += 1
+                    self.tabla_ejecucion(ejecucion, tiempo)
+                    self.tabla_bloqueados()
+                QTest.qWait(1000)
         
+    
+    def tabla_bloqueados(self):
+        num = None
+        for i in range(len(self.bloqueados)):
+            if self.bloqueados[i][7] == 15:
+                num = i
+ 
+        if num != None:
+            self.bloqueados[num][7] = 0
+            self.lote.append(self.bloqueados.pop(num))
+            self.tabla_pendientes(1,0)
+            
+        self.ui.bloqueados_tableWidget.setColumnCount(2)
+        self.ui.bloqueados_tableWidget.setRowCount(len(self.bloqueados))
+        row = 0
+
+        for i in self.bloqueados:
+            id_widget = QTableWidgetItem(str(i[0]))
+            tb_widget = QTableWidgetItem(str(i[7]))
+
+            self.ui.bloqueados_tableWidget.setItem(row,0,id_widget)
+            self.ui.bloqueados_tableWidget.setItem(row,1,tb_widget)
+            i[7] += 1
+            row+=1
+
     def tabla_ejecucion(self, ejecucion, tiempo):
             self.ui.proceso_tableWidget.setColumnCount(1)
             self.ui.proceso_tableWidget.setRowCount(5)
