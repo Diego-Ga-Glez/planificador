@@ -78,11 +78,12 @@ class MainWindow(QMainWindow):
         QTest.qWait(1000)
 
         if len(self.procesos) > 4:
-            for i in range(4): self.lote.append(self.procesos.pop(0))
+            for _ in range(4): self.lote.append(self.procesos.pop(0))
         else:
-            for i in range(len(self.procesos)): self.lote.append(self.procesos.pop(0))
+            for _ in range(len(self.procesos)): self.lote.append(self.procesos.pop(0))
 
-        self.proceso_ejecucion()   
+        self.proceso_ejecucion()
+        self.ui.terminados_tableWidget.setEnabled(True)   
     
     
     def tabla_pendientes(self, bandera, excluir):
@@ -147,15 +148,11 @@ class MainWindow(QMainWindow):
                 QTest.qWait(1000)
 
     def tabla_bloqueados(self):
-        num = None
-        for i in range(len(self.bloqueados)):
-            if self.bloqueados[i][7] == 15:
-                num = i
-
-        if num != None:
-            self.bloqueados[num][7] = 0
-            self.lote.append(self.bloqueados.pop(num))
-            self.tabla_pendientes(1,0)
+        if len(self.bloqueados) != 0:
+            if self.bloqueados[0][7] == 8:
+                self.bloqueados[0][7] = 1
+                self.lote.append(self.bloqueados.pop(0))
+                self.tabla_pendientes(1,0)
 
         self.ui.bloqueados_tableWidget.setColumnCount(2)
         self.ui.bloqueados_tableWidget.setRowCount(len(self.bloqueados))
@@ -193,7 +190,7 @@ class MainWindow(QMainWindow):
 
 
     def tabla_terminados(self):
-        self.ui.terminados_tableWidget.setColumnCount(4)
+        self.ui.terminados_tableWidget.setColumnCount(3)
         self.ui.terminados_tableWidget.setRowCount(len(self.terminados))
         row = 0
 
@@ -209,15 +206,10 @@ class MainWindow(QMainWindow):
                 resultado = 'ERROR'
 
             res_widget = QTableWidgetItem(resultado)
-
-            indice = self.terminados.index(i) + 1
-            lote = str(ceil(indice / 4))
-            lote_widget = QTableWidgetItem(lote)
             
-            self.ui.terminados_tableWidget.setItem(row,0,lote_widget)
-            self.ui.terminados_tableWidget.setItem(row,1,id_widget)
-            self.ui.terminados_tableWidget.setItem(row,2,op_widget)
-            self.ui.terminados_tableWidget.setItem(row,3,res_widget)
+            self.ui.terminados_tableWidget.setItem(row,0,id_widget)
+            self.ui.terminados_tableWidget.setItem(row,1,op_widget)
+            self.ui.terminados_tableWidget.setItem(row,2,res_widget)
             row+=1
 
     def concatenar_op(self, operador, operando1, operando2):

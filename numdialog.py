@@ -31,4 +31,4 @@ class NumDialog(QDialog):
             id = i + 1
 
             # id, op, num1, num2, TM, TT, estado, TB
-            self.parent().procesos.append([id,op,num1,num2,tiempo,tiempo,self.parent().estado,0])
+            self.parent().procesos.append([id,op,num1,num2,tiempo,tiempo,self.parent().estado,1])

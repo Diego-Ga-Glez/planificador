@@ -219,6 +219,9 @@
          <property name="enabled">
           <bool>false</bool>
          </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: white;</string>
+         </property>
          <attribute name="horizontalHeaderDefaultSectionSize">
           <number>140</number>
          </attribute>
@@ -559,14 +562,12 @@ color: black;</string>
          <property name="styleSheet">
           <string notr="true">background-color: white;</string>
          </property>
+         <property name="verticalScrollBarPolicy">
+          <enum>Qt::ScrollBarAsNeeded</enum>
+         </property>
          <attribute name="horizontalHeaderDefaultSectionSize">
           <number>95</number>
          </attribute>
-         <column>
-          <property name="text">
-           <string>Lote</string>
-          </property>
-         </column>
          <column>
           <property name="text">
            <string>ID</string>

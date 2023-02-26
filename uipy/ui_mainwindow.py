@@ -99,6 +99,7 @@ class Ui_MainWindow(object):
         self.bloqueados_tableWidget.setHorizontalHeaderItem(1, __qtablewidgetitem4)
         self.bloqueados_tableWidget.setObjectName(u"bloqueados_tableWidget")
         self.bloqueados_tableWidget.setEnabled(False)
+        self.bloqueados_tableWidget.setStyleSheet(u"background-color: white;")
         self.bloqueados_tableWidget.horizontalHeader().setDefaultSectionSize(140)
 
         self.gridLayout_2.addWidget(self.bloqueados_tableWidget, 3, 0, 1, 1)
@@ -205,19 +206,18 @@ class Ui_MainWindow(object):
         self.gridLayout_3.addWidget(self.terminados_label, 0, 0, 1, 1)
 
         self.terminados_tableWidget = QTableWidget(self.groupBox_3)
-        if (self.terminados_tableWidget.columnCount() < 4):
-            self.terminados_tableWidget.setColumnCount(4)
+        if (self.terminados_tableWidget.columnCount() < 3):
+            self.terminados_tableWidget.setColumnCount(3)
         __qtablewidgetitem11 = QTableWidgetItem()
         self.terminados_tableWidget.setHorizontalHeaderItem(0, __qtablewidgetitem11)
         __qtablewidgetitem12 = QTableWidgetItem()
         self.terminados_tableWidget.setHorizontalHeaderItem(1, __qtablewidgetitem12)
         __qtablewidgetitem13 = QTableWidgetItem()
         self.terminados_tableWidget.setHorizontalHeaderItem(2, __qtablewidgetitem13)
-        __qtablewidgetitem14 = QTableWidgetItem()
-        self.terminados_tableWidget.setHorizontalHeaderItem(3, __qtablewidgetitem14)
         self.terminados_tableWidget.setObjectName(u"terminados_tableWidget")
         self.terminados_tableWidget.setEnabled(False)
         self.terminados_tableWidget.setStyleSheet(u"background-color: white;")
+        self.terminados_tableWidget.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
         self.terminados_tableWidget.horizontalHeader().setDefaultSectionSize(95)
 
         self.gridLayout_3.addWidget(self.terminados_tableWidget, 1, 0, 1, 1)
@@ -279,13 +279,11 @@ class Ui_MainWindow(object):
         self.groupBox_3.setTitle("")
         self.terminados_label.setText(QCoreApplication.translate("MainWindow", u"Procesos terminados", None))
         ___qtablewidgetitem11 = self.terminados_tableWidget.horizontalHeaderItem(0)
-        ___qtablewidgetitem11.setText(QCoreApplication.translate("MainWindow", u"Lote", None));
+        ___qtablewidgetitem11.setText(QCoreApplication.translate("MainWindow", u"ID", None));
         ___qtablewidgetitem12 = self.terminados_tableWidget.horizontalHeaderItem(1)
-        ___qtablewidgetitem12.setText(QCoreApplication.translate("MainWindow", u"ID", None));
+        ___qtablewidgetitem12.setText(QCoreApplication.translate("MainWindow", u"Operaci\u00f3n", None));
         ___qtablewidgetitem13 = self.terminados_tableWidget.horizontalHeaderItem(2)
-        ___qtablewidgetitem13.setText(QCoreApplication.translate("MainWindow", u"Operaci\u00f3n", None));
-        ___qtablewidgetitem14 = self.terminados_tableWidget.horizontalHeaderItem(3)
-        ___qtablewidgetitem14.setText(QCoreApplication.translate("MainWindow", u"Resultado", None));
+        ___qtablewidgetitem13.setText(QCoreApplication.translate("MainWindow", u"Resultado", None));
         self.contador_label.setText(QCoreApplication.translate("MainWindow", u"Contador general: 0", None))
     # retranslateUi
 
