@@ -144,8 +144,11 @@ class MainWindow(QMainWindow):
                         self.tabla_ejecucion(ejecucion, tiempo)
                         self.tabla_bloqueados()
                     QTest.qWait(1000)
-
+ 
                 self.lote[0][6] = self.estado
+                if self.lote[0][5] == 0:
+                    self.lote[0][6] = True
+                    
                 self.ui.proceso_tableWidget.clearContents() # limpiar tabla
 
                 if self.interrupcion:
