@@ -7,6 +7,7 @@ from math import floor, ceil
 
 from uipy.ui_mainwindow import Ui_MainWindow
 from numdialog import NumDialog
+from timedialog import TimeDialog
 
 
 class MainWindow(QMainWindow):
@@ -20,7 +21,6 @@ class MainWindow(QMainWindow):
         
         self.lote = []               # lote actual en ejecucion
         self.bloqueados = []
-        self.num = 0
 
         self.ejecucion = []          # proceso en ejecucion
         self.terminados = []
@@ -31,9 +31,11 @@ class MainWindow(QMainWindow):
 
         # interfaces graficas
         self.num_w = NumDialog(self)
+        self.time_w = TimeDialog(self)
 
         #slots
         self.ui.procesos_pushButton.clicked.connect(self.mostrar_num_window)
+        self.ui.tiempos_pushButton.clicked.connect(self.mostrar_time_window)
 
         # tamaño de columnas
         pendiente = self.ui.pendientes_tableWidget.horizontalHeader()
@@ -71,6 +73,11 @@ class MainWindow(QMainWindow):
         return super().keyPressEvent(event)
     
     @Slot()
+    def mostrar_time_window(self):
+        self.time_w.show()
+        self.time_w.tabla_tiempos()
+        self.time_w.exec()
+    
     def mostrar_num_window(self):
         self.num_w.show()
         self.num_w.exec()
@@ -83,13 +90,16 @@ class MainWindow(QMainWindow):
             for _ in range(len(self.procesos)): self.lote.append(self.procesos.pop(0))
 
         self.proceso_ejecucion()
-        self.ui.terminados_tableWidget.setEnabled(True)   
+        self.ui.terminados_tableWidget.setEnabled(True)
+        self.ui.tiempos_pushButton.setEnabled(True)
     
     
     def tabla_pendientes(self, bandera, excluir):
         if len(self.procesos) > 0:
             if len(self.lote) + len(self.bloqueados) != 4:
-                self.lote.append(self.procesos.pop(0))
+                proceso = self.procesos.pop(0)
+                proceso[8] = self.contador #TLL
+                self.lote.append(proceso)
         
         self.ui.pendientes_label.setText('Numero de procesos nuevos: ' + str(len(self.procesos)))
           
@@ -120,6 +130,10 @@ class MainWindow(QMainWindow):
                 
                 ejecucion = self.lote[0]
                 tiempo = ejecucion[5]
+
+                if self.lote[0][10] == -1:
+                    self.lote[0][10] = self.contador #TRES
+
                 self.tabla_pendientes(1,0)
 
                 while tiempo > 0 and self.estado and self.interrupcion:
@@ -135,7 +149,9 @@ class MainWindow(QMainWindow):
                 self.ui.proceso_tableWidget.clearContents() # limpiar tabla
 
                 if self.interrupcion:
-                    self.terminados.append(self.lote.pop(0))
+                    terminado = self.lote.pop(0)
+                    terminado[9] = self.contador #TF
+                    self.terminados.append(terminado)
                     self.tabla_terminados()
                 else:
                     self.bloqueados.append(self.lote.pop(0))     
@@ -196,7 +212,6 @@ class MainWindow(QMainWindow):
 
         for i in self.terminados:
             id_widget = QTableWidgetItem(str(i[0]))
-
             operacion = self.concatenar_op(i[1], i[2], i[3])
             op_widget = QTableWidgetItem(operacion)
 

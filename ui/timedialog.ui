@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Dialog</class>
- <widget class="QDialog" name="Dialog">
+ <class>TimeDialog</class>
+ <widget class="QDialog" name="TimeDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -24,7 +24,7 @@
      </property>
      <layout class="QGridLayout" name="gridLayout">
       <item row="0" column="0">
-       <widget class="QTableWidget" name="tableWidget">
+       <widget class="QTableWidget" name="tiempos_tableWidget">
         <property name="styleSheet">
          <string notr="true">background-color: white;</string>
         </property>
@@ -70,7 +70,12 @@
         </column>
         <column>
          <property name="text">
-          <string>TS</string>
+          <string>TRET</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>TRES</string>
          </property>
         </column>
         <column>
@@ -80,12 +85,7 @@
         </column>
         <column>
          <property name="text">
-          <string>TRET</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>TRES</string>
+          <string>TS</string>
          </property>
         </column>
        </widget>
