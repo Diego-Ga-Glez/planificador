@@ -15,10 +15,10 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QGridLayout, QGroupBox, QHeaderView,
-    QLabel, QMainWindow, QMenuBar, QPushButton,
-    QSizePolicy, QSpacerItem, QStatusBar, QTableWidget,
-    QTableWidgetItem, QWidget)
+from PySide6.QtWidgets import (QAbstractItemView, QApplication, QGridLayout, QGroupBox,
+    QHeaderView, QLabel, QMainWindow, QMenuBar,
+    QPushButton, QSizePolicy, QSpacerItem, QStatusBar,
+    QTableWidget, QTableWidgetItem, QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -64,10 +64,12 @@ class Ui_MainWindow(object):
         __qtablewidgetitem2 = QTableWidgetItem()
         self.pendientes_tableWidget.setHorizontalHeaderItem(2, __qtablewidgetitem2)
         self.pendientes_tableWidget.setObjectName(u"pendientes_tableWidget")
-        self.pendientes_tableWidget.setEnabled(False)
+        self.pendientes_tableWidget.setEnabled(True)
+        self.pendientes_tableWidget.setFocusPolicy(Qt.NoFocus)
         self.pendientes_tableWidget.setLayoutDirection(Qt.LeftToRight)
         self.pendientes_tableWidget.setAutoFillBackground(False)
         self.pendientes_tableWidget.setStyleSheet(u"background-color: white;")
+        self.pendientes_tableWidget.setEditTriggers(QAbstractItemView.NoEditTriggers)
         self.pendientes_tableWidget.horizontalHeader().setVisible(True)
         self.pendientes_tableWidget.horizontalHeader().setCascadingSectionResizes(False)
         self.pendientes_tableWidget.horizontalHeader().setDefaultSectionSize(100)
@@ -98,8 +100,10 @@ class Ui_MainWindow(object):
         __qtablewidgetitem4 = QTableWidgetItem()
         self.bloqueados_tableWidget.setHorizontalHeaderItem(1, __qtablewidgetitem4)
         self.bloqueados_tableWidget.setObjectName(u"bloqueados_tableWidget")
-        self.bloqueados_tableWidget.setEnabled(False)
+        self.bloqueados_tableWidget.setEnabled(True)
+        self.bloqueados_tableWidget.setFocusPolicy(Qt.NoFocus)
         self.bloqueados_tableWidget.setStyleSheet(u"background-color: white;")
+        self.bloqueados_tableWidget.setEditTriggers(QAbstractItemView.NoEditTriggers)
         self.bloqueados_tableWidget.horizontalHeader().setDefaultSectionSize(140)
 
         self.gridLayout_2.addWidget(self.bloqueados_tableWidget, 3, 0, 1, 1)
@@ -135,8 +139,10 @@ class Ui_MainWindow(object):
         __qtablewidgetitem10 = QTableWidgetItem()
         self.proceso_tableWidget.setVerticalHeaderItem(4, __qtablewidgetitem10)
         self.proceso_tableWidget.setObjectName(u"proceso_tableWidget")
-        self.proceso_tableWidget.setEnabled(False)
+        self.proceso_tableWidget.setEnabled(True)
+        self.proceso_tableWidget.setFocusPolicy(Qt.NoFocus)
         self.proceso_tableWidget.setStyleSheet(u"background-color: white;")
+        self.proceso_tableWidget.setEditTriggers(QAbstractItemView.NoEditTriggers)
         self.proceso_tableWidget.horizontalHeader().setDefaultSectionSize(160)
         self.proceso_tableWidget.verticalHeader().setDefaultSectionSize(41)
 
@@ -169,15 +175,11 @@ class Ui_MainWindow(object):
         palette1.setBrush(QPalette.Active, QPalette.PlaceholderText, brush4)
 #endif
         palette1.setBrush(QPalette.Inactive, QPalette.WindowText, brush1)
-        brush5 = QBrush(QColor(240, 240, 240, 255))
-        brush5.setStyle(Qt.SolidPattern)
-        palette1.setBrush(QPalette.Inactive, QPalette.Button, brush5)
+        palette1.setBrush(QPalette.Inactive, QPalette.Button, brush3)
         palette1.setBrush(QPalette.Inactive, QPalette.Text, brush1)
         palette1.setBrush(QPalette.Inactive, QPalette.ButtonText, brush1)
-        brush6 = QBrush(QColor(255, 255, 255, 255))
-        brush6.setStyle(Qt.SolidPattern)
-        palette1.setBrush(QPalette.Inactive, QPalette.Base, brush6)
-        palette1.setBrush(QPalette.Inactive, QPalette.Window, brush5)
+        palette1.setBrush(QPalette.Inactive, QPalette.Base, brush3)
+        palette1.setBrush(QPalette.Inactive, QPalette.Window, brush3)
 #if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
         palette1.setBrush(QPalette.Inactive, QPalette.PlaceholderText, brush4)
 #endif
@@ -225,9 +227,11 @@ class Ui_MainWindow(object):
         __qtablewidgetitem13 = QTableWidgetItem()
         self.terminados_tableWidget.setHorizontalHeaderItem(2, __qtablewidgetitem13)
         self.terminados_tableWidget.setObjectName(u"terminados_tableWidget")
-        self.terminados_tableWidget.setEnabled(False)
+        self.terminados_tableWidget.setEnabled(True)
+        self.terminados_tableWidget.setFocusPolicy(Qt.NoFocus)
         self.terminados_tableWidget.setStyleSheet(u"background-color: white;")
         self.terminados_tableWidget.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
+        self.terminados_tableWidget.setEditTriggers(QAbstractItemView.NoEditTriggers)
         self.terminados_tableWidget.horizontalHeader().setDefaultSectionSize(95)
 
         self.gridLayout_3.addWidget(self.terminados_tableWidget, 1, 0, 1, 1)

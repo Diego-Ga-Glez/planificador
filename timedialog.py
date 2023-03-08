@@ -1,17 +1,28 @@
 from PySide6.QtWidgets import QDialog, QTableWidgetItem, QHeaderView
 from uipy.ui_timedialog import Ui_TimeDialog
+from PySide6.QtGui import QKeyEvent
+from PySide6.QtCore import Qt
 
 class TimeDialog(QDialog):
     def __init__(self,parent):
         super(TimeDialog, self).__init__(parent)
         self.ui = Ui_TimeDialog()
         self.ui.setupUi(self)
+        
+        self.ui.tiempos_tableWidget.verticalScrollBar().setEnabled(True)
 
         #Tamaño de columnas
         tiempos = self.ui.tiempos_tableWidget.horizontalHeader()
         tiempos.setSectionResizeMode(QHeaderView.Stretch)
 
-    def tabla_tiempos(self):
+    def keyPressEvent(self, event: QKeyEvent):
+        # focus en la ventana timedialog
+        if event.key() == Qt.Key_C:
+            self.close()
+
+        return super().keyPressEvent(event)
+
+    def tabla_tiempos_terminados(self):
         self.ui.tiempos_tableWidget.setColumnCount(12)
         self.ui.tiempos_tableWidget.setRowCount(len(self.parent().terminados))
         row = 0
@@ -54,3 +65,12 @@ class TimeDialog(QDialog):
             self.ui.tiempos_tableWidget.setItem(row,10,te_widget)
             self.ui.tiempos_tableWidget.setItem(row,11,ts_widget)
             row+=1
+
+    def tabla_tiempos_nuevos(self):
+        pass
+
+    def tabla_tiempos_listos(self):
+        pass
+
+    def tabla_tiempos_ejecucion(self):
+        pass

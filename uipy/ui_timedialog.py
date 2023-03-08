@@ -15,15 +15,16 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QDialog, QGridLayout, QGroupBox,
-    QHeaderView, QSizePolicy, QTableWidget, QTableWidgetItem,
-    QWidget)
+from PySide6.QtWidgets import (QAbstractItemView, QApplication, QDialog, QGridLayout,
+    QGroupBox, QHeaderView, QSizePolicy, QTableWidget,
+    QTableWidgetItem, QWidget)
 
 class Ui_TimeDialog(object):
     def setupUi(self, TimeDialog):
         if not TimeDialog.objectName():
             TimeDialog.setObjectName(u"TimeDialog")
         TimeDialog.resize(851, 352)
+        TimeDialog.setFocusPolicy(Qt.StrongFocus)
         TimeDialog.setStyleSheet(u"background-color: #f1e4e8;")
         self.gridLayout_4 = QGridLayout(TimeDialog)
         self.gridLayout_4.setObjectName(u"gridLayout_4")
@@ -59,7 +60,12 @@ class Ui_TimeDialog(object):
         __qtablewidgetitem11 = QTableWidgetItem()
         self.tiempos_tableWidget.setHorizontalHeaderItem(11, __qtablewidgetitem11)
         self.tiempos_tableWidget.setObjectName(u"tiempos_tableWidget")
+        self.tiempos_tableWidget.setEnabled(True)
+        self.tiempos_tableWidget.setFocusPolicy(Qt.NoFocus)
         self.tiempos_tableWidget.setStyleSheet(u"background-color: white;")
+        self.tiempos_tableWidget.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
+        self.tiempos_tableWidget.setHorizontalScrollBarPolicy(Qt.ScrollBarAsNeeded)
+        self.tiempos_tableWidget.setEditTriggers(QAbstractItemView.NoEditTriggers)
 
         self.gridLayout.addWidget(self.tiempos_tableWidget, 0, 0, 1, 1)
 

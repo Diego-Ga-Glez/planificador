@@ -25,6 +25,8 @@ class MainWindow(QMainWindow):
         self.ejecucion = []          # proceso en ejecucion
         self.terminados = []
         self.contador = 0
+
+        self.interrupciones = False # variable para habilitar 
         self.pausa = False
         self.estado = True
         self.interrupcion = True
@@ -56,43 +58,50 @@ class MainWindow(QMainWindow):
         exit()
     
     def keyPressEvent(self, event: QKeyEvent):
-        if event.key() == Qt.Key_I:
-            if not self.pausa:
-                self.interrupcion = False
+        if self.interrupciones:
+            if event.key() == Qt.Key_I:
+                if not self.pausa:
+                    self.interrupcion = False
 
-        elif event.key() == Qt.Key_E:
-            if not self.pausa:
-                self.estado = False
+            elif event.key() == Qt.Key_E:
+                if not self.pausa:
+                    self.estado = False
 
-        elif event.key() == Qt.Key_P:
-            self.pausa = True
-            
-        elif event.key() == Qt.Key_C:
-            self.pausa = False
+            elif event.key() == Qt.Key_P:
+                self.pausa = True
+                
+            elif event.key() == Qt.Key_C:
+                self.pausa = False
+
+                # focus en la ventana mainwindows
+                if self.time_w.isVisible():
+                    self.time_w.close()
+
+            elif event.key() == Qt.Key_N:
+                self.num_w.num_window(valor=False)
+
+            elif event.key() == Qt.Key_T:
+                self.mostrar_time_window()
         
         return super().keyPressEvent(event)
     
     @Slot()
     def mostrar_time_window(self):
         self.time_w.show()
-        self.time_w.tabla_tiempos()
+        self.time_w.tabla_tiempos_terminados()
         self.time_w.exec()
     
     def mostrar_num_window(self):
         self.num_w.show()
         self.num_w.exec()
         self.ui.procesos_pushButton.setEnabled(False)
+        self.interrupciones = True # habilita las interrupciones
         QTest.qWait(1000)
 
-        if len(self.procesos) > 4:
-            for _ in range(4): self.lote.append(self.procesos.pop(0))
-        else:
-            for _ in range(len(self.procesos)): self.lote.append(self.procesos.pop(0))
+        for _ in range(len(self.procesos)): self.lote.append(self.procesos.pop(0))
 
         self.proceso_ejecucion()
-        self.ui.terminados_tableWidget.setEnabled(True)
         self.ui.tiempos_pushButton.setEnabled(True)
-    
     
     def tabla_pendientes(self, bandera, excluir):
         if len(self.procesos) > 0:
@@ -132,7 +141,7 @@ class MainWindow(QMainWindow):
                 tiempo = ejecucion[5]
 
                 if self.lote[0][10] == -1:
-                    self.lote[0][10] = self.contador #TRES
+                    self.lote[0][10] = self.contador #T-RES
 
                 self.tabla_pendientes(1,0)
 

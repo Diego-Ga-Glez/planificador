@@ -145,7 +145,10 @@
        <item row="1" column="0">
         <widget class="QTableWidget" name="pendientes_tableWidget">
          <property name="enabled">
-          <bool>false</bool>
+          <bool>true</bool>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
          </property>
          <property name="layoutDirection">
           <enum>Qt::LeftToRight</enum>
@@ -155,6 +158,9 @@
          </property>
          <property name="styleSheet">
           <string notr="true">background-color: white;</string>
+         </property>
+         <property name="editTriggers">
+          <set>QAbstractItemView::NoEditTriggers</set>
          </property>
          <attribute name="horizontalHeaderVisible">
           <bool>true</bool>
@@ -217,10 +223,16 @@
        <item row="3" column="0">
         <widget class="QTableWidget" name="bloqueados_tableWidget">
          <property name="enabled">
-          <bool>false</bool>
+          <bool>true</bool>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
          </property>
          <property name="styleSheet">
           <string notr="true">background-color: white;</string>
+         </property>
+         <property name="editTriggers">
+          <set>QAbstractItemView::NoEditTriggers</set>
          </property>
          <attribute name="horizontalHeaderDefaultSectionSize">
           <number>140</number>
@@ -259,10 +271,16 @@
        <item row="1" column="0">
         <widget class="QTableWidget" name="proceso_tableWidget">
          <property name="enabled">
-          <bool>false</bool>
+          <bool>true</bool>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
          </property>
          <property name="styleSheet">
           <string notr="true">background-color: white;</string>
+         </property>
+         <property name="editTriggers">
+          <set>QAbstractItemView::NoEditTriggers</set>
          </property>
          <attribute name="horizontalHeaderDefaultSectionSize">
           <number>160</number>
@@ -407,9 +425,9 @@
             <colorrole role="Button">
              <brush brushstyle="SolidPattern">
               <color alpha="255">
-               <red>240</red>
-               <green>240</green>
-               <blue>240</blue>
+               <red>221</red>
+               <green>161</green>
+               <blue>182</blue>
               </color>
              </brush>
             </colorrole>
@@ -434,18 +452,18 @@
             <colorrole role="Base">
              <brush brushstyle="SolidPattern">
               <color alpha="255">
-               <red>255</red>
-               <green>255</green>
-               <blue>255</blue>
+               <red>221</red>
+               <green>161</green>
+               <blue>182</blue>
               </color>
              </brush>
             </colorrole>
             <colorrole role="Window">
              <brush brushstyle="SolidPattern">
               <color alpha="255">
-               <red>240</red>
-               <green>240</green>
-               <blue>240</blue>
+               <red>221</red>
+               <green>161</green>
+               <blue>182</blue>
               </color>
              </brush>
             </colorrole>
@@ -569,13 +587,19 @@
        <item row="1" column="0">
         <widget class="QTableWidget" name="terminados_tableWidget">
          <property name="enabled">
-          <bool>false</bool>
+          <bool>true</bool>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
          </property>
          <property name="styleSheet">
           <string notr="true">background-color: white;</string>
          </property>
          <property name="verticalScrollBarPolicy">
           <enum>Qt::ScrollBarAsNeeded</enum>
+         </property>
+         <property name="editTriggers">
+          <set>QAbstractItemView::NoEditTriggers</set>
          </property>
          <attribute name="horizontalHeaderDefaultSectionSize">
           <number>95</number>

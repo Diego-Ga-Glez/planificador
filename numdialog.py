@@ -9,12 +9,21 @@ class NumDialog(QDialog):
         self.ui = Ui_NumDialog()
         self.ui.setupUi(self)
 
+        self.id = 0
+
+        # definir min y max en spinbox
+        self.ui.numero_spinBox.setMinimum(1)
+        self.ui.numero_spinBox.setMaximum(3)
+
         #Slots
-        self.ui.num_aceptar_buttonBox.accepted.connect(self.num_window)
+        self.ui.num_aceptar_buttonBox.accepted.connect(lambda: self.num_window(valor=True))
 
     @Slot()
-    def num_window(self):
-        num = self.ui.numero_spinBox.value()
+    def num_window(self,valor):
+        if valor:
+            num = self.ui.numero_spinBox.value()
+        else:
+            num = 1
 
         operaciones = ['Suma','Resta', 'Multiplicacion', 'Division', 'Residuo']
 
@@ -28,7 +37,10 @@ class NumDialog(QDialog):
                 num2 = randint(0, 99)
 
             tiempo = randint(5, 16)
-            id = i + 1
+            self.id +=1
 
             # id, op, num1, num2, TM, TT, estado, TB, TLL, TF, TR
-            self.parent().procesos.append([id,op,num1,num2,tiempo,tiempo,self.parent().estado,1,0,0,-1])
+            self.parent().procesos.append([self.id,op,num1,num2,tiempo,tiempo,self.parent().estado,1,0,0,-1])
+
+        if not valor:
+            self.parent().tabla_pendientes(1,0)
