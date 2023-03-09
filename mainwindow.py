@@ -88,7 +88,8 @@ class MainWindow(QMainWindow):
     @Slot()
     def mostrar_time_window(self):
         self.time_w.show()
-        self.time_w.tabla_tiempos_terminados()
+        #self.time_w.tabla_tiempos_terminados()
+        self.time_w.tabla_tiempos()
         self.time_w.exec()
     
     def mostrar_num_window(self):
@@ -98,7 +99,10 @@ class MainWindow(QMainWindow):
         self.interrupciones = True # habilita las interrupciones
         QTest.qWait(1000)
 
-        for _ in range(len(self.procesos)): self.lote.append(self.procesos.pop(0))
+        if len(self.procesos) > 4:
+            for _ in range(4): self.lote.append(self.procesos.pop(0))
+        else:
+            for _ in range(len(self.procesos)): self.lote.append(self.procesos.pop(0))
 
         self.proceso_ejecucion()
         self.ui.tiempos_pushButton.setEnabled(True)
@@ -123,7 +127,7 @@ class MainWindow(QMainWindow):
             if i != excluir:
                 id_widget = QTableWidgetItem(str(self.lote[i][0]))
                 tme_widget = QTableWidgetItem(str(self.lote[i][4]))
-                tt_widget =  QTableWidgetItem(str(self.lote[i][4] - self.lote[i][5]))
+                tt_widget = QTableWidgetItem(str(self.lote[i][4] - self.lote[i][5]))
                 self.ui.pendientes_tableWidget.setItem(row,0,id_widget)
                 self.ui.pendientes_tableWidget.setItem(row,1,tme_widget)
                 self.ui.pendientes_tableWidget.setItem(row,2,tt_widget)

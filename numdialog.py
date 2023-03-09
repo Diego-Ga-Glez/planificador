@@ -13,7 +13,7 @@ class NumDialog(QDialog):
 
         # definir min y max en spinbox
         self.ui.numero_spinBox.setMinimum(1)
-        self.ui.numero_spinBox.setMaximum(3)
+        self.ui.numero_spinBox.setMaximum(99)
 
         #Slots
         self.ui.num_aceptar_buttonBox.accepted.connect(lambda: self.num_window(valor=True))
@@ -27,7 +27,7 @@ class NumDialog(QDialog):
 
         operaciones = ['Suma','Resta', 'Multiplicacion', 'Division', 'Residuo']
 
-        for i in range(num):
+        for _ in range(num):
             op = choice(operaciones)
             num1 = randint(0, 99)
 

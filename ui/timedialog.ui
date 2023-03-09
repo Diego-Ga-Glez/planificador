@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>851</width>
+    <width>897</width>
     <height>352</height>
    </rect>
   </property>
@@ -53,6 +53,11 @@
         </column>
         <column>
          <property name="text">
+          <string>Estado</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
           <string>Operación</string>
          </property>
         </column>
@@ -69,11 +74,6 @@
         <column>
          <property name="text">
           <string>TT</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>Estado</string>
          </property>
         </column>
         <column>
@@ -104,6 +104,11 @@
         <column>
          <property name="text">
           <string>TS</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>TB</string>
          </property>
         </column>
        </widget>

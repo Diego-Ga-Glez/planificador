@@ -23,7 +23,7 @@ class Ui_TimeDialog(object):
     def setupUi(self, TimeDialog):
         if not TimeDialog.objectName():
             TimeDialog.setObjectName(u"TimeDialog")
-        TimeDialog.resize(851, 352)
+        TimeDialog.resize(897, 352)
         TimeDialog.setFocusPolicy(Qt.StrongFocus)
         TimeDialog.setStyleSheet(u"background-color: #f1e4e8;")
         self.gridLayout_4 = QGridLayout(TimeDialog)
@@ -33,8 +33,8 @@ class Ui_TimeDialog(object):
         self.gridLayout = QGridLayout(self.groupBox)
         self.gridLayout.setObjectName(u"gridLayout")
         self.tiempos_tableWidget = QTableWidget(self.groupBox)
-        if (self.tiempos_tableWidget.columnCount() < 12):
-            self.tiempos_tableWidget.setColumnCount(12)
+        if (self.tiempos_tableWidget.columnCount() < 13):
+            self.tiempos_tableWidget.setColumnCount(13)
         __qtablewidgetitem = QTableWidgetItem()
         self.tiempos_tableWidget.setHorizontalHeaderItem(0, __qtablewidgetitem)
         __qtablewidgetitem1 = QTableWidgetItem()
@@ -59,6 +59,8 @@ class Ui_TimeDialog(object):
         self.tiempos_tableWidget.setHorizontalHeaderItem(10, __qtablewidgetitem10)
         __qtablewidgetitem11 = QTableWidgetItem()
         self.tiempos_tableWidget.setHorizontalHeaderItem(11, __qtablewidgetitem11)
+        __qtablewidgetitem12 = QTableWidgetItem()
+        self.tiempos_tableWidget.setHorizontalHeaderItem(12, __qtablewidgetitem12)
         self.tiempos_tableWidget.setObjectName(u"tiempos_tableWidget")
         self.tiempos_tableWidget.setEnabled(True)
         self.tiempos_tableWidget.setFocusPolicy(Qt.NoFocus)
@@ -84,15 +86,15 @@ class Ui_TimeDialog(object):
         ___qtablewidgetitem = self.tiempos_tableWidget.horizontalHeaderItem(0)
         ___qtablewidgetitem.setText(QCoreApplication.translate("TimeDialog", u"ID", None));
         ___qtablewidgetitem1 = self.tiempos_tableWidget.horizontalHeaderItem(1)
-        ___qtablewidgetitem1.setText(QCoreApplication.translate("TimeDialog", u"Operaci\u00f3n", None));
+        ___qtablewidgetitem1.setText(QCoreApplication.translate("TimeDialog", u"Estado", None));
         ___qtablewidgetitem2 = self.tiempos_tableWidget.horizontalHeaderItem(2)
-        ___qtablewidgetitem2.setText(QCoreApplication.translate("TimeDialog", u"Resultado", None));
+        ___qtablewidgetitem2.setText(QCoreApplication.translate("TimeDialog", u"Operaci\u00f3n", None));
         ___qtablewidgetitem3 = self.tiempos_tableWidget.horizontalHeaderItem(3)
-        ___qtablewidgetitem3.setText(QCoreApplication.translate("TimeDialog", u"TME", None));
+        ___qtablewidgetitem3.setText(QCoreApplication.translate("TimeDialog", u"Resultado", None));
         ___qtablewidgetitem4 = self.tiempos_tableWidget.horizontalHeaderItem(4)
-        ___qtablewidgetitem4.setText(QCoreApplication.translate("TimeDialog", u"TT", None));
+        ___qtablewidgetitem4.setText(QCoreApplication.translate("TimeDialog", u"TME", None));
         ___qtablewidgetitem5 = self.tiempos_tableWidget.horizontalHeaderItem(5)
-        ___qtablewidgetitem5.setText(QCoreApplication.translate("TimeDialog", u"Estado", None));
+        ___qtablewidgetitem5.setText(QCoreApplication.translate("TimeDialog", u"TT", None));
         ___qtablewidgetitem6 = self.tiempos_tableWidget.horizontalHeaderItem(6)
         ___qtablewidgetitem6.setText(QCoreApplication.translate("TimeDialog", u"TLL", None));
         ___qtablewidgetitem7 = self.tiempos_tableWidget.horizontalHeaderItem(7)
@@ -105,5 +107,7 @@ class Ui_TimeDialog(object):
         ___qtablewidgetitem10.setText(QCoreApplication.translate("TimeDialog", u"TE", None));
         ___qtablewidgetitem11 = self.tiempos_tableWidget.horizontalHeaderItem(11)
         ___qtablewidgetitem11.setText(QCoreApplication.translate("TimeDialog", u"TS", None));
+        ___qtablewidgetitem12 = self.tiempos_tableWidget.horizontalHeaderItem(12)
+        ___qtablewidgetitem12.setText(QCoreApplication.translate("TimeDialog", u"TB", None));
     # retranslateUi
 
