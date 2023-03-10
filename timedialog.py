@@ -29,7 +29,9 @@ class TimeDialog(QDialog):
         rowCount = len(self.parent().terminados + self.parent().lote + self.parent().bloqueados + self.parent().procesos)
         self.ui.tiempos_tableWidget.setRowCount(rowCount)
         self.imprimir_tablas(self.parent().terminados)
-        self.imprimir_tablas(self.parent().lote)
+        if len(self.parent().lote) > 0:
+            self.imprimir_tablas([self.parent().lote[0],])
+        self.imprimir_tablas(self.parent().lote[1:])
         self.imprimir_tablas(self.parent().bloqueados)
         self.imprimir_tablas(self.parent().procesos)
 
@@ -41,8 +43,10 @@ class TimeDialog(QDialog):
 
             if lista == self.parent().terminados:
                 estado_widget = QTableWidgetItem('Terminado')
-            elif lista == self.parent().lote:
-                estado_widget = QTableWidgetItem('Listo') #En ejecucion (lote(cero)) aparece en listos
+            elif len(self.parent().lote) > 0 and lista == [self.parent().lote[0],]:
+                estado_widget = QTableWidgetItem('Ejecucion')
+            elif lista == self.parent().lote[1:]:
+                estado_widget = QTableWidgetItem('Listo')
             elif lista == self.parent().bloqueados:
                 estado_widget = QTableWidgetItem('Bloqueado')
             elif lista == self.parent().procesos:
@@ -71,7 +75,6 @@ class TimeDialog(QDialog):
 
             res_widget = QTableWidgetItem(resultado)
             tme_widget = QTableWidgetItem(str(i[4]))
-
             tt_widget =  QTableWidgetItem(str(t_transcurrido))
 
             if lista != self.parent().procesos:
