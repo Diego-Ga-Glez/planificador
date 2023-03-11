@@ -78,10 +78,12 @@ class MainWindow(QMainWindow):
                     self.time_w.close()
 
             elif event.key() == Qt.Key_N:
-                self.num_w.num_window(valor=False)
+                if not self.pausa:
+                    self.num_w.num_window(valor=False)
 
             elif event.key() == Qt.Key_T:
-                self.mostrar_time_window()
+                if not self.pausa:
+                    self.mostrar_time_window()
         
         return super().keyPressEvent(event)
     
