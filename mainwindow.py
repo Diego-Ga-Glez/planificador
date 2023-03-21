@@ -109,6 +109,7 @@ class MainWindow(QMainWindow):
 
         # se define el quantum en mainwindow
         self.q = self.num_w.quantum
+        self.ui.quantum_label.setText("Quantum: " + str(self.q))
     
         self.proceso_ejecucion()
         self.ui.tiempos_pushButton.setEnabled(True)
@@ -146,25 +147,17 @@ class MainWindow(QMainWindow):
                     self.lote[0][6] = True
                     
                 self.ui.proceso_tableWidget.clearContents() # limpiar tabla
-
-                if self.interrupcion:
-                    if quantum == self.q and tiempo > 0:
-                        self.lote.append(self.lote.pop(0))
-                    else:
-                        terminado = self.lote.pop(0)
-                        terminado[9] = self.contador #TF
-                        self.terminados.append(terminado)
-                        self.tabla_terminados()
-                else:
-                    if self.lote[0][5] == 0:
-                        terminado = self.lote.pop(0)
-                        terminado[9] = self.contador #TF
-                        self.terminados.append(terminado)
-                        self.tabla_terminados()      
-                    elif quantum == self.q and tiempo > 0:
-                        self.lote.append(self.lote.pop(0)) 
-                    else:
-                        self.bloqueados.append(self.lote.pop(0))     
+                
+                if self.lote[0][5] == 0 or not self.estado :
+                    terminado = self.lote.pop(0)
+                    terminado[9] = self.contador #TF
+                    self.terminados.append(terminado)
+                    self.tabla_terminados()      
+                elif quantum == self.q and tiempo > 0:
+                    self.lote.append(self.lote.pop(0)) 
+                elif not self.interrupcion:
+                    self.bloqueados.append(self.lote.pop(0))
+                        
             else:
                 if self.pausa == False:
                     self.contador += 1

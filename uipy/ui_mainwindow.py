@@ -121,6 +121,16 @@ class Ui_MainWindow(object):
         self.groupBox.setObjectName(u"groupBox")
         self.gridLayout = QGridLayout(self.groupBox)
         self.gridLayout.setObjectName(u"gridLayout")
+        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+        self.gridLayout.addItem(self.verticalSpacer, 3, 0, 1, 1)
+
+        self.proceso_label = QLabel(self.groupBox)
+        self.proceso_label.setObjectName(u"proceso_label")
+        self.proceso_label.setAlignment(Qt.AlignCenter)
+
+        self.gridLayout.addWidget(self.proceso_label, 0, 0, 1, 1)
+
         self.proceso_tableWidget = QTableWidget(self.groupBox)
         if (self.proceso_tableWidget.columnCount() < 1):
             self.proceso_tableWidget.setColumnCount(1)
@@ -146,19 +156,16 @@ class Ui_MainWindow(object):
         self.proceso_tableWidget.setStyleSheet(u"background-color: white;")
         self.proceso_tableWidget.setEditTriggers(QAbstractItemView.NoEditTriggers)
         self.proceso_tableWidget.horizontalHeader().setDefaultSectionSize(110)
-        self.proceso_tableWidget.verticalHeader().setDefaultSectionSize(31)
+        self.proceso_tableWidget.verticalHeader().setDefaultSectionSize(29)
 
         self.gridLayout.addWidget(self.proceso_tableWidget, 1, 0, 1, 1)
 
-        self.proceso_label = QLabel(self.groupBox)
-        self.proceso_label.setObjectName(u"proceso_label")
-        self.proceso_label.setAlignment(Qt.AlignCenter)
+        self.tiempos_pushButton = QPushButton(self.groupBox)
+        self.tiempos_pushButton.setObjectName(u"tiempos_pushButton")
+        self.tiempos_pushButton.setEnabled(False)
+        self.tiempos_pushButton.setStyleSheet(u"background-color: #dda1b6;")
 
-        self.gridLayout.addWidget(self.proceso_label, 0, 0, 1, 1)
-
-        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
-
-        self.gridLayout.addItem(self.verticalSpacer, 2, 0, 1, 1)
+        self.gridLayout.addWidget(self.tiempos_pushButton, 5, 0, 1, 1)
 
         self.procesos_pushButton = QPushButton(self.groupBox)
         self.procesos_pushButton.setObjectName(u"procesos_pushButton")
@@ -197,14 +204,13 @@ class Ui_MainWindow(object):
         self.procesos_pushButton.setPalette(palette1)
         self.procesos_pushButton.setStyleSheet(u"background-color: #dda1b6;")
 
-        self.gridLayout.addWidget(self.procesos_pushButton, 3, 0, 1, 1)
+        self.gridLayout.addWidget(self.procesos_pushButton, 4, 0, 1, 1)
 
-        self.tiempos_pushButton = QPushButton(self.groupBox)
-        self.tiempos_pushButton.setObjectName(u"tiempos_pushButton")
-        self.tiempos_pushButton.setEnabled(False)
-        self.tiempos_pushButton.setStyleSheet(u"background-color: #dda1b6;")
+        self.quantum_label = QLabel(self.groupBox)
+        self.quantum_label.setObjectName(u"quantum_label")
+        self.quantum_label.setAlignment(Qt.AlignCenter)
 
-        self.gridLayout.addWidget(self.tiempos_pushButton, 4, 0, 1, 1)
+        self.gridLayout.addWidget(self.quantum_label, 2, 0, 1, 1)
 
 
         self.gridLayout_4.addWidget(self.groupBox, 0, 1, 1, 1)
@@ -278,6 +284,7 @@ class Ui_MainWindow(object):
         ___qtablewidgetitem4.setText(QCoreApplication.translate("MainWindow", u"Tiempo Bloqueado", None));
         self.bloqueados_label.setText(QCoreApplication.translate("MainWindow", u"Procesos bloqueados", None))
         self.groupBox.setTitle("")
+        self.proceso_label.setText(QCoreApplication.translate("MainWindow", u"Proceso en ejecuci\u00f3n", None))
         ___qtablewidgetitem5 = self.proceso_tableWidget.horizontalHeaderItem(0)
         ___qtablewidgetitem5.setText(QCoreApplication.translate("MainWindow", u"Datos", None));
         ___qtablewidgetitem6 = self.proceso_tableWidget.verticalHeaderItem(0)
@@ -292,9 +299,9 @@ class Ui_MainWindow(object):
         ___qtablewidgetitem10.setText(QCoreApplication.translate("MainWindow", u"Tiempo transcurrido quantum", None));
         ___qtablewidgetitem11 = self.proceso_tableWidget.verticalHeaderItem(5)
         ___qtablewidgetitem11.setText(QCoreApplication.translate("MainWindow", u"Tiempo restante", None));
-        self.proceso_label.setText(QCoreApplication.translate("MainWindow", u"Proceso en ejecuci\u00f3n", None))
-        self.procesos_pushButton.setText(QCoreApplication.translate("MainWindow", u"Iniciar Procesos", None))
         self.tiempos_pushButton.setText(QCoreApplication.translate("MainWindow", u"Mostrar Tiempos de Procesos", None))
+        self.procesos_pushButton.setText(QCoreApplication.translate("MainWindow", u"Iniciar Procesos", None))
+        self.quantum_label.setText(QCoreApplication.translate("MainWindow", u"Quantum: 0", None))
         self.groupBox_3.setTitle("")
         self.terminados_label.setText(QCoreApplication.translate("MainWindow", u"Procesos terminados", None))
         ___qtablewidgetitem12 = self.terminados_tableWidget.horizontalHeaderItem(0)
