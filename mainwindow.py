@@ -112,6 +112,7 @@ class MainWindow(QMainWindow):
     
         self.proceso_ejecucion()
         self.ui.tiempos_pushButton.setEnabled(True)
+        self.interrupciones = False
     
     def proceso_ejecucion(self):
         while len(self.lote) + len(self.bloqueados) > 0:
@@ -147,7 +148,7 @@ class MainWindow(QMainWindow):
                 self.ui.proceso_tableWidget.clearContents() # limpiar tabla
 
                 if self.interrupcion:
-                    if quantum == self.q:
+                    if quantum == self.q and tiempo > 0:
                         self.lote.append(self.lote.pop(0))
                     else:
                         terminado = self.lote.pop(0)
@@ -155,7 +156,15 @@ class MainWindow(QMainWindow):
                         self.terminados.append(terminado)
                         self.tabla_terminados()
                 else:
-                    self.bloqueados.append(self.lote.pop(0))     
+                    if self.lote[0][5] == 0:
+                        terminado = self.lote.pop(0)
+                        terminado[9] = self.contador #TF
+                        self.terminados.append(terminado)
+                        self.tabla_terminados()      
+                    elif quantum == self.q and tiempo > 0:
+                        self.lote.append(self.lote.pop(0)) 
+                    else:
+                        self.bloqueados.append(self.lote.pop(0))     
             else:
                 if self.pausa == False:
                     self.contador += 1
