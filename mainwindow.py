@@ -25,6 +25,7 @@ class MainWindow(QMainWindow):
         self.ejecucion = []          # proceso en ejecucion
         self.terminados = []
         self.contador = 0
+        self.q = 0
 
         self.interrupciones = False # variable para habilitar 
         self.pausa = False
@@ -106,35 +107,11 @@ class MainWindow(QMainWindow):
         else:
             for _ in range(len(self.procesos)): self.lote.append(self.procesos.pop(0))
 
+        # se define el quantum en mainwindow
+        self.q = self.num_w.quantum
+    
         self.proceso_ejecucion()
         self.ui.tiempos_pushButton.setEnabled(True)
-    
-    def tabla_pendientes(self, bandera, excluir):
-        if len(self.procesos) > 0:
-            if len(self.lote) + len(self.bloqueados) != 4:
-                proceso = self.procesos.pop(0)
-                proceso[8] = self.contador #TLL
-                self.lote.append(proceso)
-        
-        self.ui.pendientes_label.setText('Numero de procesos nuevos: ' + str(len(self.procesos)))
-          
-        # self.tabla_pendientes (0,-1) imprime todos y excluye el elemento -1 (no existe)
-        # self.tabla_pendientes (1,n) imprime todos menos uno y excluye el elemento n
-        
-        self.ui.pendientes_tableWidget.setColumnCount(3)
-        self.ui.pendientes_tableWidget.setRowCount(len(self.lote)-bandera)
-        row = 0
-
-        for i in range(len(self.lote)):
-            if i != excluir:
-                id_widget = QTableWidgetItem(str(self.lote[i][0]))
-                tme_widget = QTableWidgetItem(str(self.lote[i][4]))
-                tt_widget = QTableWidgetItem(str(self.lote[i][4] - self.lote[i][5]))
-                self.ui.pendientes_tableWidget.setItem(row,0,id_widget)
-                self.ui.pendientes_tableWidget.setItem(row,1,tme_widget)
-                self.ui.pendientes_tableWidget.setItem(row,2,tt_widget)
-
-                row+=1
     
     def proceso_ejecucion(self):
         while len(self.lote) + len(self.bloqueados) > 0:
@@ -181,6 +158,33 @@ class MainWindow(QMainWindow):
                     self.tabla_pendientes(0,-1)
                 QTest.qWait(1000)
 
+    def tabla_pendientes(self, bandera, excluir):
+        if len(self.procesos) > 0:
+            if len(self.lote) + len(self.bloqueados) != 4:
+                proceso = self.procesos.pop(0)
+                proceso[8] = self.contador #TLL
+                self.lote.append(proceso)
+        
+        self.ui.pendientes_label.setText('Numero de procesos nuevos: ' + str(len(self.procesos)))
+          
+        # self.tabla_pendientes (0,-1) imprime todos y excluye el elemento -1 (no existe)
+        # self.tabla_pendientes (1,n) imprime todos menos uno y excluye el elemento n
+        
+        self.ui.pendientes_tableWidget.setColumnCount(3)
+        self.ui.pendientes_tableWidget.setRowCount(len(self.lote)-bandera)
+        row = 0
+
+        for i in range(len(self.lote)):
+            if i != excluir:
+                id_widget = QTableWidgetItem(str(self.lote[i][0]))
+                tme_widget = QTableWidgetItem(str(self.lote[i][4]))
+                tt_widget = QTableWidgetItem(str(self.lote[i][4] - self.lote[i][5]))
+                self.ui.pendientes_tableWidget.setItem(row,0,id_widget)
+                self.ui.pendientes_tableWidget.setItem(row,1,tme_widget)
+                self.ui.pendientes_tableWidget.setItem(row,2,tt_widget)
+
+                row+=1
+    
     def tabla_bloqueados(self):
         if len(self.bloqueados) != 0:
             if self.bloqueados[0][7] == 8:

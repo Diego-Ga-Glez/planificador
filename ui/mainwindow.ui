@@ -283,10 +283,10 @@
           <set>QAbstractItemView::NoEditTriggers</set>
          </property>
          <attribute name="horizontalHeaderDefaultSectionSize">
-          <number>160</number>
+          <number>110</number>
          </attribute>
          <attribute name="verticalHeaderDefaultSectionSize">
-          <number>41</number>
+          <number>31</number>
          </attribute>
          <row>
           <property name="text">
@@ -306,6 +306,11 @@
          <row>
           <property name="text">
            <string>Tiempo transcurrido</string>
+          </property>
+         </row>
+         <row>
+          <property name="text">
+           <string>Tiempo transcurrido quantum</string>
           </property>
          </row>
          <row>

@@ -40,8 +40,23 @@ class Ui_NumDialog(object):
         self.numero_spinBox = QSpinBox(self.numero_groupBox)
         self.numero_spinBox.setObjectName(u"numero_spinBox")
         self.numero_spinBox.setStyleSheet(u"background-color: white;")
+        self.numero_spinBox.setMinimum(1)
 
         self.verticalLayout_2.addWidget(self.numero_spinBox)
+
+        self.quantum_label = QLabel(self.numero_groupBox)
+        self.quantum_label.setObjectName(u"quantum_label")
+        self.quantum_label.setAlignment(Qt.AlignCenter)
+
+        self.verticalLayout_2.addWidget(self.quantum_label)
+
+        self.quantum_spinBox = QSpinBox(self.numero_groupBox)
+        self.quantum_spinBox.setObjectName(u"quantum_spinBox")
+        self.quantum_spinBox.setStyleSheet(u"background-color: white;")
+        self.quantum_spinBox.setMinimum(1)
+        self.quantum_spinBox.setMaximum(16)
+
+        self.verticalLayout_2.addWidget(self.quantum_spinBox)
 
 
         self.verticalLayout.addWidget(self.numero_groupBox)
@@ -67,5 +82,6 @@ class Ui_NumDialog(object):
         NumDialog.setWindowTitle(QCoreApplication.translate("NumDialog", u"Procesos", None))
         self.numero_groupBox.setTitle("")
         self.numero_label.setText(QCoreApplication.translate("NumDialog", u"N\u00famero de procesos", None))
+        self.quantum_label.setText(QCoreApplication.translate("NumDialog", u"Valor del quantum:", None))
     # retranslateUi
 

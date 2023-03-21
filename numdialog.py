@@ -10,6 +10,7 @@ class NumDialog(QDialog):
         self.ui.setupUi(self)
 
         self.id = 0
+        self.quantum = 0
 
         # definir min y max en spinbox
         self.ui.numero_spinBox.setMinimum(1)
@@ -22,6 +23,7 @@ class NumDialog(QDialog):
     def num_window(self,valor):
         if valor:
             num = self.ui.numero_spinBox.value()
+            self.quantum = self.ui.quantum_spinBox.value()
         else:
             num = 1
 
