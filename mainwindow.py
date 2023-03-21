@@ -122,19 +122,22 @@ class MainWindow(QMainWindow):
                 
                 ejecucion = self.lote[0]
                 tiempo = ejecucion[5]
+                quantum = 0
 
                 if self.lote[0][10] == -1:
                     self.lote[0][10] = self.contador #T-RES
 
                 self.tabla_pendientes(1,0)
 
-                while tiempo > 0 and self.estado and self.interrupcion:
+                while tiempo > 0 and self.estado and self.interrupcion and quantum < self.q:
                     if self.pausa == False:
                         tiempo -= 1
+                        quantum += 1
                         self.lote[0][5] -= 1
                         self.contador += 1
-                        self.tabla_ejecucion(ejecucion, tiempo)
+                        self.tabla_ejecucion(ejecucion, tiempo, quantum)
                         self.tabla_bloqueados()
+
                     QTest.qWait(1000)
  
                 self.lote[0][6] = self.estado
@@ -144,10 +147,13 @@ class MainWindow(QMainWindow):
                 self.ui.proceso_tableWidget.clearContents() # limpiar tabla
 
                 if self.interrupcion:
-                    terminado = self.lote.pop(0)
-                    terminado[9] = self.contador #TF
-                    self.terminados.append(terminado)
-                    self.tabla_terminados()
+                    if quantum == self.q:
+                        self.lote.append(self.lote.pop(0))
+                    else:
+                        terminado = self.lote.pop(0)
+                        terminado[9] = self.contador #TF
+                        self.terminados.append(terminado)
+                        self.tabla_terminados()
                 else:
                     self.bloqueados.append(self.lote.pop(0))     
             else:
@@ -205,9 +211,9 @@ class MainWindow(QMainWindow):
             i[7] += 1
             row+=1
 
-    def tabla_ejecucion(self, ejecucion, tiempo):
+    def tabla_ejecucion(self, ejecucion, tiempo, quantum):
             self.ui.proceso_tableWidget.setColumnCount(1)
-            self.ui.proceso_tableWidget.setRowCount(5)
+            self.ui.proceso_tableWidget.setRowCount(6)
 
             id_widget = QTableWidgetItem(str(ejecucion[0]))
 
@@ -216,13 +222,15 @@ class MainWindow(QMainWindow):
             op_widget = QTableWidgetItem(operacion)
             tme_widget = QTableWidgetItem(str(ejecucion[4]))
             transcurrido_widget = QTableWidgetItem(str(ejecucion[4]-tiempo))
+            quantum_widget = QTableWidgetItem(str(quantum))
             restante_widget = QTableWidgetItem(str(tiempo))
 
             self.ui.proceso_tableWidget.setItem(0,0,id_widget)
             self.ui.proceso_tableWidget.setItem(1,0,op_widget)
             self.ui.proceso_tableWidget.setItem(2,0,tme_widget)
             self.ui.proceso_tableWidget.setItem(3,0,transcurrido_widget)
-            self.ui.proceso_tableWidget.setItem(4,0,restante_widget)
+            self.ui.proceso_tableWidget.setItem(4,0,quantum_widget)
+            self.ui.proceso_tableWidget.setItem(5,0,restante_widget)
 
             self.ui.contador_label.setText('Contador general: ' + str(self.contador))
 
