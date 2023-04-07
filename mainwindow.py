@@ -27,6 +27,16 @@ class MainWindow(QMainWindow):
         self.contador = 0
         self.q = 0
 
+        self.num_marcos = 10
+        self.marcos = []
+        # generar marcos
+        # primer elemento espacio ocupado (5/5, 4/5, 3/5, 2/5, 1/5, 0/5)
+        # segundo elemento quien lo ocupa (id del proceso)
+        for _ in range(self.num_marcos): self.marcos.append([0,0])
+
+        # cantidad de marcos disponibles
+        self.marcos_disponibles = 10
+
         self.interrupciones = False # variable para habilitar 
         self.pausa = False
         self.estado = True
@@ -95,17 +105,81 @@ class MainWindow(QMainWindow):
         self.time_w.tabla_tiempos()
         self.time_w.exec()
     
+    
+    def calc_marcos_disponibles(self):
+        num = 0
+        for i in range(self.num_marcos):
+            if self.marcos[i] == [0,0]:
+                num+=1
+
+        return num
+    
+    def liberar_marcos(self, proceso):
+        for i in range(self.num_marcos):
+            if self.marcos[i][1] == proceso[0]:
+                self.marcos[i][0] = 0
+                self.marcos[i][1] = 0
+
+        self.marcos_disponibles = self.calc_marcos_disponibles()
+    
+    # ingresar procesos a memoria
+    def memoria(self):
+        # verifica que haya procesos para agregar
+        if len(self.procesos) == 0: return
+        detener = True
+
+        while len(self.procesos) != 0 and detener:
+
+            tamaño = self.procesos[0][11]
+            paginas = ceil(tamaño/5) # calcular las paginas del proceso
+
+            if self.marcos_disponibles >= paginas:
+                for i in range(self.num_marcos):
+                     # mientras paginas no sea cero y si hay una posicion libre 
+                     # se agrega una pagina
+                    if self.marcos[i] == [0,0] and paginas != 0:
+                        # se agrega el espacio ocupado
+                        if tamaño >= 5:
+                            self.marcos[i][0] = 5
+                            tamoño -= 5
+                        else:
+                            self.marcos[i][0] = tamaño
+                            tamaño-=tamaño
+
+                        # se agrega en el marco quien lo esta ocupa (id del proceso)
+                        self.marcos[i][1] = self.procesos[0][0]
+                        paginas-=1
+
+                # recalcular marcos disponibles
+                self.marcos_disponibles = self.calc_marcos_disponibles()
+                # agregar a listos
+                self.procesos[0][8] = self.contador #TLL
+                self.lote.append(self.procesos.pop(0))
+
+            else:
+                detener = False 
+    
+    def funcion_prueba(self):
+        print()
+        print()
+        for i in self.lote: print(i)
+        for i in self.procesos: print(i)
+        print()
+        print()
+        for i in range(self.num_marcos): print(self.marcos[i])
+        QTest.qWait(10000)
+    
     def mostrar_num_window(self):
         self.num_w.show()
         self.num_w.exec()
         self.ui.procesos_pushButton.setEnabled(False)
         self.interrupciones = True # habilita las interrupciones
-        QTest.qWait(1000)
 
-        if len(self.procesos) > 4:
-            for _ in range(4): self.lote.append(self.procesos.pop(0))
-        else:
-            for _ in range(len(self.procesos)): self.lote.append(self.procesos.pop(0))
+        # agregar procesos a memoria 
+        self.memoria()
+
+        #pruebaaaa
+        self.funcion_prueba()
 
         # se define el quantum en mainwindow
         self.q = self.num_w.quantum
@@ -150,9 +224,14 @@ class MainWindow(QMainWindow):
                 
                 if self.lote[0][5] == 0 or not self.estado :
                     terminado = self.lote.pop(0)
+                    self.liberar_marcos(terminado) # liberar marcos
                     terminado[9] = self.contador #TF
                     self.terminados.append(terminado)
-                    self.tabla_terminados()      
+                    self.tabla_terminados()
+
+                    #pruebaaaa
+                    self.funcion_prueba()
+
                 elif quantum == self.q and tiempo > 0:
                     self.lote.append(self.lote.pop(0)) 
                 elif not self.interrupcion:
@@ -168,10 +247,7 @@ class MainWindow(QMainWindow):
 
     def tabla_pendientes(self, bandera, excluir):
         if len(self.procesos) > 0:
-            if len(self.lote) + len(self.bloqueados) != 4:
-                proceso = self.procesos.pop(0)
-                proceso[8] = self.contador #TLL
-                self.lote.append(proceso)
+            self.memoria()
         
         self.ui.pendientes_label.setText('Numero de procesos nuevos: ' + str(len(self.procesos)))
           

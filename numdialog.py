@@ -41,8 +41,10 @@ class NumDialog(QDialog):
             tiempo = randint(5, 16)
             self.id +=1
 
-            # id, op, num1, num2, TM, TT, estado, TB, TLL, TF, TR
-            self.parent().procesos.append([self.id,op,num1,num2,tiempo,tiempo,self.parent().estado,1,0,0,-1])
+            tamaño = randint(6,25)
+
+            # id, op, num1, num2, TM, TT, estado, TB, TLL, TF, TR, tamaño
+            self.parent().procesos.append([self.id,op,num1,num2,tiempo,tiempo,self.parent().estado,1,0,0,-1, tamaño])
 
         if not valor:
             self.parent().tabla_pendientes(1,0)
