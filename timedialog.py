@@ -10,8 +10,6 @@ class TimeDialog(QDialog):
         self.ui.setupUi(self)
 
         self.row = 0
-        
-        self.ui.tiempos_tableWidget.verticalScrollBar().setEnabled(True)
 
         #Tamaño de columnas
         tiempos = self.ui.tiempos_tableWidget.horizontalHeader()
@@ -25,7 +23,7 @@ class TimeDialog(QDialog):
 
     def tabla_tiempos(self):
         self.row = 0
-        self.ui.tiempos_tableWidget.setColumnCount(13)
+        self.ui.tiempos_tableWidget.setColumnCount(14)
         rowCount = len(self.parent().terminados + self.parent().lote + self.parent().bloqueados + self.parent().procesos)
         self.ui.tiempos_tableWidget.setRowCount(rowCount)
         self.imprimir_tablas(self.parent().terminados)
@@ -40,6 +38,7 @@ class TimeDialog(QDialog):
          # id, op, num1, num2, TM, TT, estado, TB, TLL, TF, TR
         for i in lista:
             id_widget = QTableWidgetItem(str(i[0]))
+            tam_widget = QTableWidgetItem(str(i[11]))
 
             if lista == self.parent().terminados:
                 estado_widget = QTableWidgetItem('Terminado')
@@ -114,16 +113,17 @@ class TimeDialog(QDialog):
                 tb_widget = QTableWidgetItem('null')
 
             self.ui.tiempos_tableWidget.setItem(self.row,0,id_widget)
-            self.ui.tiempos_tableWidget.setItem(self.row,1,estado_widget)
-            self.ui.tiempos_tableWidget.setItem(self.row,2,op_widget)
-            self.ui.tiempos_tableWidget.setItem(self.row,3,res_widget)
-            self.ui.tiempos_tableWidget.setItem(self.row,4,tme_widget)
-            self.ui.tiempos_tableWidget.setItem(self.row,5,tt_widget)
-            self.ui.tiempos_tableWidget.setItem(self.row,6,tll_widget)
-            self.ui.tiempos_tableWidget.setItem(self.row,7,tf_widget)
-            self.ui.tiempos_tableWidget.setItem(self.row,8,tret_widget)
-            self.ui.tiempos_tableWidget.setItem(self.row,9,tres_widget)
-            self.ui.tiempos_tableWidget.setItem(self.row,10,te_widget)
-            self.ui.tiempos_tableWidget.setItem(self.row,11,ts_widget)
-            self.ui.tiempos_tableWidget.setItem(self.row,12,tb_widget)
+            self.ui.tiempos_tableWidget.setItem(self.row,1,tam_widget)
+            self.ui.tiempos_tableWidget.setItem(self.row,2,estado_widget)
+            self.ui.tiempos_tableWidget.setItem(self.row,3,op_widget)
+            self.ui.tiempos_tableWidget.setItem(self.row,4,res_widget)
+            self.ui.tiempos_tableWidget.setItem(self.row,5,tme_widget)
+            self.ui.tiempos_tableWidget.setItem(self.row,6,tt_widget)
+            self.ui.tiempos_tableWidget.setItem(self.row,7,tll_widget)
+            self.ui.tiempos_tableWidget.setItem(self.row,8,tf_widget)
+            self.ui.tiempos_tableWidget.setItem(self.row,9,tret_widget)
+            self.ui.tiempos_tableWidget.setItem(self.row,10,tres_widget)
+            self.ui.tiempos_tableWidget.setItem(self.row,11,te_widget)
+            self.ui.tiempos_tableWidget.setItem(self.row,12,ts_widget)
+            self.ui.tiempos_tableWidget.setItem(self.row,13,tb_widget)
             self.row += 1

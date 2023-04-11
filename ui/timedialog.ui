@@ -6,15 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>897</width>
+    <width>945</width>
     <height>352</height>
    </rect>
   </property>
   <property name="focusPolicy">
-   <enum>Qt::StrongFocus</enum>
+   <enum>Qt::NoFocus</enum>
   </property>
   <property name="windowTitle">
-   <string>Tiempos de procesos</string>
+   <string>Tabla de procesos</string>
   </property>
   <property name="styleSheet">
    <string notr="true">background-color: #f1e4e8;</string>
@@ -38,7 +38,7 @@
          <string notr="true">background-color: white;</string>
         </property>
         <property name="verticalScrollBarPolicy">
-         <enum>Qt::ScrollBarAlwaysOn</enum>
+         <enum>Qt::ScrollBarAsNeeded</enum>
         </property>
         <property name="horizontalScrollBarPolicy">
          <enum>Qt::ScrollBarAsNeeded</enum>
@@ -49,6 +49,11 @@
         <column>
          <property name="text">
           <string>ID</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Tamaño</string>
          </property>
         </column>
         <column>
