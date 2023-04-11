@@ -24,7 +24,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(1099, 635)
+        MainWindow.resize(1137, 635)
         palette = QPalette()
         brush = QBrush(QColor(241, 228, 232, 255))
         brush.setStyle(Qt.SolidPattern)
@@ -298,7 +298,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 1099, 22))
+        self.menubar.setGeometry(QRect(0, 0, 1137, 22))
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QStatusBar(MainWindow)
         self.statusbar.setObjectName(u"statusbar")
