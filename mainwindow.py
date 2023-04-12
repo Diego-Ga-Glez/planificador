@@ -228,7 +228,7 @@ class MainWindow(QMainWindow):
         self.interrupciones = False
     
     def proceso_ejecucion(self):
-        while len(self.lote) + len(self.bloqueados) > 0:
+        while len(self.lote) + len(self.bloqueados) + len(self.suspendidos) > 0:
             if len(self.lote) != 0:
                 self.pausa = False
                 self.estado = True
@@ -284,6 +284,12 @@ class MainWindow(QMainWindow):
                     self.ui.contador_label.setText('Contador general: ' + str(self.contador))
                     self.tabla_bloqueados()
                     self.tabla_pendientes(0,-1)
+                    if not self.suspendido:
+                        if len(self.bloqueados) != 0:
+                            self.bloqueados[0][7] = 1
+                            self.liberar_marcos(self.bloqueados[0])
+                            self.suspendidos.append(self.bloqueados.pop(0))
+                            #self.txt_suspendidos()
                 QTest.qWait(1000)
 
     def tabla_pendientes(self, bandera, excluir):
