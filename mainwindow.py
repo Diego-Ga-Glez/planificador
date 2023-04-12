@@ -228,6 +228,7 @@ class MainWindow(QMainWindow):
         self.interrupciones = False
     
     def proceso_ejecucion(self):
+        mantener_quantum = True
         while len(self.lote) + len(self.bloqueados) + len(self.suspendidos) > 0:
             if len(self.lote) != 0:
                 self.pausa = False
@@ -237,7 +238,9 @@ class MainWindow(QMainWindow):
                 
                 ejecucion = self.lote[0]
                 tiempo = ejecucion[5]
-                quantum = 0
+                if mantener_quantum:
+                    quantum = 0
+                mantener_quantum = True
 
                 if self.lote[0][10] == -1:
                     self.lote[0][10] = self.contador #T-RES
@@ -273,10 +276,13 @@ class MainWindow(QMainWindow):
                 elif not self.interrupcion:
                     self.bloqueados.append(self.lote.pop(0))
                 elif not self.suspendido:
-                     if len(self.bloqueados) != 0:
+                    if len(self.bloqueados) != 0:
                         self.liberar_marcos(self.bloqueados[0])
                         self.suspendidos.append(self.bloqueados.pop(0))
-                         #self.txt_suspendidos()
+                        #self.txt_suspendidos()
+                    else:
+                         mantener_quantum = False
+                    
                                 
             else:
                 if self.pausa == False:
