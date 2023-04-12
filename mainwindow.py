@@ -286,16 +286,17 @@ class MainWindow(QMainWindow):
                                 
             else:
                 if self.pausa == False:
-                    self.contador += 1
-                    self.ui.contador_label.setText('Contador general: ' + str(self.contador))
-                    self.tabla_bloqueados()
-                    self.tabla_pendientes(0,-1)
                     if not self.suspendido:
                         if len(self.bloqueados) != 0:
                             self.bloqueados[0][7] = 1
                             self.liberar_marcos(self.bloqueados[0])
                             self.suspendidos.append(self.bloqueados.pop(0))
                             #self.txt_suspendidos()
+                    self.contador += 1
+                    self.ui.contador_label.setText('Contador general: ' + str(self.contador))
+                    self.tabla_bloqueados()
+                    self.tabla_pendientes(0,-1)
+                    
                 QTest.qWait(1000)
 
     def tabla_pendientes(self, bandera, excluir):
