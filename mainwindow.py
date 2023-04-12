@@ -273,9 +273,10 @@ class MainWindow(QMainWindow):
                 elif not self.interrupcion:
                     self.bloqueados.append(self.lote.pop(0))
                 elif not self.suspendido:
-                     self.liberar_marcos(self.lote[0])
-                     self.suspendidos.append(self.lote.pop(0))
-                     #self.txt_suspendidos()
+                     if len(self.bloqueados) != 0:
+                        self.liberar_marcos(self.bloqueados[0])
+                        self.suspendidos.append(self.bloqueados.pop(0))
+                         #self.txt_suspendidos()
                                 
             else:
                 if self.pausa == False:
