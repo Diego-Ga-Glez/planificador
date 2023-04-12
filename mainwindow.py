@@ -125,8 +125,9 @@ class MainWindow(QMainWindow):
             elif event.key() == Qt.Key_R:
                 if not self.pausa:
                     if len(self.suspendidos) != 0:
-                        if self.marcos_disponibles >= self.suspendidos[0][11]:
-                            self.procesos.append(self.suspendidos.pop(0))
+                        paginas = ceil(self.suspendidos[0][11]/5)
+                        if self.marcos_disponibles >= paginas:
+                            self.procesos.insert(0,self.suspendidos.pop(0))
                             self.memoria()
                             self.tabla_pendientes(1,0)
                             #self.txt_suspendidos()
