@@ -25,6 +25,7 @@ class MainWindow(QMainWindow):
 
         self.ejecucion = []          # proceso en ejecucion
         self.terminados = []
+        self.suspendidos = []       # procesos suspendidos
         self.contador = 0
         self.q = 0
 
@@ -47,6 +48,7 @@ class MainWindow(QMainWindow):
         self.pausa = False
         self.estado = True
         self.interrupcion = True
+        self.suspendido = True
 
         # interfaces graficas
         self.num_w = NumDialog(self)
@@ -115,6 +117,19 @@ class MainWindow(QMainWindow):
             elif event.key() == Qt.Key_A:
                 if not self.pausa:
                     self.mostrar_pag_window()
+            
+            elif event.key() == Qt.Key_S:
+                if not self.pausa:
+                    self.suspendido = False
+
+            elif event.key() == Qt.Key_R:
+                if not self.pausa:
+                    if len(self.suspendidos) != 0:
+                        if self.marcos_disponibles >= self.suspendidos[0][11]:
+                            self.procesos.append(self.suspendidos.pop(0))
+                            self.memoria()
+                            self.tabla_pendientes(1,0)
+                            #self.txt_suspendidos()
         
         return super().keyPressEvent(event)
     
@@ -217,6 +232,7 @@ class MainWindow(QMainWindow):
                 self.pausa = False
                 self.estado = True
                 self.interrupcion = True
+                self.suspendido = True
                 
                 ejecucion = self.lote[0]
                 tiempo = ejecucion[5]
@@ -227,7 +243,7 @@ class MainWindow(QMainWindow):
 
                 self.tabla_pendientes(1,0)
 
-                while tiempo > 0 and self.estado and self.interrupcion and quantum < self.q:
+                while tiempo > 0 and self.suspendido and self.estado and self.interrupcion and quantum < self.q:
                     if self.pausa == False:
                         tiempo -= 1
                         quantum += 1
@@ -255,7 +271,11 @@ class MainWindow(QMainWindow):
                     self.lote.append(self.lote.pop(0)) 
                 elif not self.interrupcion:
                     self.bloqueados.append(self.lote.pop(0))
-                        
+                elif not self.suspendido:
+                     self.liberar_marcos(self.lote[0])
+                     self.suspendidos.append(self.lote.pop(0))
+                     #self.txt_suspendidos()
+                                
             else:
                 if self.pausa == False:
                     self.contador += 1
