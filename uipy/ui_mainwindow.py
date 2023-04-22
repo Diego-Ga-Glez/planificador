@@ -161,8 +161,8 @@ class Ui_MainWindow(object):
 
         self.groupBox_5 = QGroupBox(self.centralwidget)
         self.groupBox_5.setObjectName(u"groupBox_5")
-        self.gridLayout_6 = QGridLayout(self.groupBox_5)
-        self.gridLayout_6.setObjectName(u"gridLayout_6")
+        self.gridLayout_3 = QGridLayout(self.groupBox_5)
+        self.gridLayout_3.setObjectName(u"gridLayout_3")
         self.bloqueados_tableWidget = QTableWidget(self.groupBox_5)
         if (self.bloqueados_tableWidget.columnCount() < 3):
             self.bloqueados_tableWidget.setColumnCount(3)
@@ -179,7 +179,31 @@ class Ui_MainWindow(object):
         self.bloqueados_tableWidget.setEditTriggers(QAbstractItemView.NoEditTriggers)
         self.bloqueados_tableWidget.horizontalHeader().setDefaultSectionSize(140)
 
-        self.gridLayout_6.addWidget(self.bloqueados_tableWidget, 0, 0, 1, 1)
+        self.gridLayout_3.addWidget(self.bloqueados_tableWidget, 0, 0, 1, 3)
+
+        self.suspendidos_label = QLabel(self.groupBox_5)
+        self.suspendidos_label.setObjectName(u"suspendidos_label")
+        self.suspendidos_label.setAlignment(Qt.AlignCenter)
+
+        self.gridLayout_3.addWidget(self.suspendidos_label, 1, 0, 1, 3)
+
+        self.sigRegresar_label = QLabel(self.groupBox_5)
+        self.sigRegresar_label.setObjectName(u"sigRegresar_label")
+        self.sigRegresar_label.setAlignment(Qt.AlignCenter)
+
+        self.gridLayout_3.addWidget(self.sigRegresar_label, 2, 0, 1, 1)
+
+        self.idSuspendido_label = QLabel(self.groupBox_5)
+        self.idSuspendido_label.setObjectName(u"idSuspendido_label")
+        self.idSuspendido_label.setAlignment(Qt.AlignCenter)
+
+        self.gridLayout_3.addWidget(self.idSuspendido_label, 2, 1, 1, 1)
+
+        self.tamSuspendido_label = QLabel(self.groupBox_5)
+        self.tamSuspendido_label.setObjectName(u"tamSuspendido_label")
+        self.tamSuspendido_label.setAlignment(Qt.AlignCenter)
+
+        self.gridLayout_3.addWidget(self.tamSuspendido_label, 2, 2, 1, 1)
 
 
         self.gridLayout_4.addWidget(self.groupBox_5, 1, 0, 1, 1)
@@ -208,6 +232,16 @@ class Ui_MainWindow(object):
         self.terminados_tableWidget.horizontalHeader().setDefaultSectionSize(95)
 
         self.gridLayout_7.addWidget(self.terminados_tableWidget, 0, 0, 1, 1)
+
+        self.label = QLabel(self.groupBox_6)
+        self.label.setObjectName(u"label")
+
+        self.gridLayout_7.addWidget(self.label, 1, 0, 1, 1)
+
+        self.label_2 = QLabel(self.groupBox_6)
+        self.label_2.setObjectName(u"label_2")
+
+        self.gridLayout_7.addWidget(self.label_2, 2, 0, 1, 1)
 
 
         self.gridLayout_4.addWidget(self.groupBox_6, 1, 1, 1, 1)
@@ -339,7 +373,7 @@ class Ui_MainWindow(object):
         ___qtablewidgetitem10.setText(QCoreApplication.translate("MainWindow", u"TME", None));
         ___qtablewidgetitem11 = self.pendientes_tableWidget.horizontalHeaderItem(3)
         ___qtablewidgetitem11.setText(QCoreApplication.translate("MainWindow", u"TT", None));
-        self.pendientes_label.setText(QCoreApplication.translate("MainWindow", u"Numero de procesos nuevos: 0", None))
+        self.pendientes_label.setText(QCoreApplication.translate("MainWindow", u"N\u00famero de procesos nuevos: 0", None))
         self.sig_label.setText(QCoreApplication.translate("MainWindow", u"Sig. a ingresar:", None))
         self.idSig_label.setText(QCoreApplication.translate("MainWindow", u"ID: null", None))
         self.tamSig_label.setText(QCoreApplication.translate("MainWindow", u"Tama\u00f1o: null", None))
@@ -350,6 +384,10 @@ class Ui_MainWindow(object):
         ___qtablewidgetitem13.setText(QCoreApplication.translate("MainWindow", u"Tama\u00f1o", None));
         ___qtablewidgetitem14 = self.bloqueados_tableWidget.horizontalHeaderItem(2)
         ___qtablewidgetitem14.setText(QCoreApplication.translate("MainWindow", u"TB", None));
+        self.suspendidos_label.setText(QCoreApplication.translate("MainWindow", u"N\u00famero de procesos suspendidos: 0", None))
+        self.sigRegresar_label.setText(QCoreApplication.translate("MainWindow", u"Sig. a regresar:", None))
+        self.idSuspendido_label.setText(QCoreApplication.translate("MainWindow", u"ID: null", None))
+        self.tamSuspendido_label.setText(QCoreApplication.translate("MainWindow", u"Tama\u00f1o: null", None))
         self.groupBox_6.setTitle(QCoreApplication.translate("MainWindow", u"Procesos terminados", None))
         ___qtablewidgetitem15 = self.terminados_tableWidget.horizontalHeaderItem(0)
         ___qtablewidgetitem15.setText(QCoreApplication.translate("MainWindow", u"ID", None));
@@ -359,6 +397,8 @@ class Ui_MainWindow(object):
         ___qtablewidgetitem17.setText(QCoreApplication.translate("MainWindow", u"Operaci\u00f3n", None));
         ___qtablewidgetitem18 = self.terminados_tableWidget.horizontalHeaderItem(3)
         ___qtablewidgetitem18.setText(QCoreApplication.translate("MainWindow", u"Resultado", None));
+        self.label.setText("")
+        self.label_2.setText("")
         self.groupBox_4.setTitle(QCoreApplication.translate("MainWindow", u"Memoria", None))
         ___qtablewidgetitem19 = self.memoria1_tableWidget.horizontalHeaderItem(0)
         ___qtablewidgetitem19.setText(QCoreApplication.translate("MainWindow", u"Marco", None));

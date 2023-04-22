@@ -4,6 +4,8 @@ from PySide6.QtTest import QTest
 from PySide6.QtGui import QKeyEvent
 
 from math import ceil
+from tabulate import tabulate
+from os import remove
 
 from uipy.ui_mainwindow import Ui_MainWindow
 from numdialog import NumDialog
@@ -102,7 +104,7 @@ class MainWindow(QMainWindow):
             elif event.key() == Qt.Key_C:
                 self.pausa = False
 
-                # focus en la ventana mainwindows
+                # focus en la ventana mainwindow
                 if self.time_w.isVisible():
                     self.time_w.close()
 
@@ -130,7 +132,7 @@ class MainWindow(QMainWindow):
                             self.procesos.insert(0,self.suspendidos.pop(0))
                             self.memoria()
                             self.tabla_pendientes(1,0)
-                            #self.txt_suspendidos()
+                            self.txt_suspendidos()
         
         return super().keyPressEvent(event)
     
@@ -201,8 +203,11 @@ class MainWindow(QMainWindow):
 
                 # recalcular marcos disponibles
                 self.marcos_disponibles = self.calc_marcos_disponibles()
+
                 # agregar a listos
-                self.procesos[0][8] = self.contador #TLL
+                if self.procesos[0][8] == -1:
+                    self.procesos[0][8] = self.contador #TLL
+
                 self.lote.append(self.procesos.pop(0))
 
             else:
@@ -226,6 +231,11 @@ class MainWindow(QMainWindow):
         self.tabla_memoria(self.ui.memoria2_tableWidget)
         self.ui.tiempos_pushButton.setEnabled(True)
         self.interrupciones = False
+
+        try:
+            remove("suspendidos.txt")  # No sirve -.-   ------------------------------------
+        except:
+            pass
     
     def proceso_ejecucion(self):
         mantener_quantum = True
@@ -279,11 +289,11 @@ class MainWindow(QMainWindow):
                     if len(self.bloqueados) != 0:
                         self.liberar_marcos(self.bloqueados[0])
                         self.suspendidos.append(self.bloqueados.pop(0))
-                        #self.txt_suspendidos()
+                       
+                        self.txt_suspendidos()
                     else:
                          mantener_quantum = False
-                    
-                                
+                                      
             else:
                 if self.pausa == False:
                     if not self.suspendido:
@@ -291,7 +301,9 @@ class MainWindow(QMainWindow):
                             self.bloqueados[0][7] = 1
                             self.liberar_marcos(self.bloqueados[0])
                             self.suspendidos.append(self.bloqueados.pop(0))
-                            #self.txt_suspendidos()
+                            
+                            self.txt_suspendidos()
+
                     self.contador += 1
                     self.ui.contador_label.setText('Contador general: ' + str(self.contador))
                     self.tabla_bloqueados()
@@ -307,6 +319,7 @@ class MainWindow(QMainWindow):
         self.tabla_memoria(self.ui.memoria2_tableWidget)
 
         self.ui.pendientes_label.setText('Numero de procesos nuevos: ' + str(len(self.procesos)))
+        self.ui.suspendidos_label.setText('Numero de procesos suspendidos: ' + str(len(self.suspendidos)))
 
         if len(self.procesos) > 0:
             self.ui.idSig_label.setText('ID: ' + str(self.procesos[0][0]))
@@ -314,6 +327,13 @@ class MainWindow(QMainWindow):
         else:
             self.ui.idSig_label.setText('ID: null')
             self.ui.tamSig_label.setText('Tamaño: null')
+        
+        if len(self.suspendidos) > 0:
+            self.ui.idSuspendido_label.setText('ID: ' + str(self.suspendidos[0][0]))
+            self.ui.tamSuspendido_label.setText('Tamaño: ' + str(self.suspendidos[0][11]))
+        else:
+            self.ui.idSuspendido_label.setText('ID: null')
+            self.ui.tamSuspendido_label.setText('Tamaño: null')
 
         # self.tabla_pendientes (0,-1) imprime todos y excluye el elemento -1 (no existe)
         # self.tabla_pendientes (1,n) imprime todos menos uno y excluye el elemento n
@@ -467,6 +487,25 @@ class MainWindow(QMainWindow):
 
         progressbar.setStyleSheet("QProgressBar::chunk {" f"background-color: {color};" "}")
         return progressbar
+    
+    def txt_suspendidos(self):
+        lista = []
+        encabezados = ['ID','Operación','Operando 1','Operando 2','TME','Tamaño']
+
+        for suspendido in self.suspendidos:
+            elemento = []
+            elemento.append(suspendido[0])
+            elemento.append(suspendido[1])
+            elemento.append(suspendido[2])
+            elemento.append(suspendido[3])
+            elemento.append(suspendido[4])
+            elemento.append(suspendido[11])
+            lista.append(elemento)
+
+        texto = tabulate(lista, headers=encabezados, tablefmt="fancy_grid",  stralign='left')
+
+        with open("suspendidos.txt", "w", encoding="utf-8") as file:
+            file.write(texto)
 
     def concatenar_op(self, operador, operando1, operando2):
         if operador == 'Suma':

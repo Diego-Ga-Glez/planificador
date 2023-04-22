@@ -299,7 +299,7 @@
        <item row="1" column="0" colspan="3">
         <widget class="QLabel" name="pendientes_label">
          <property name="text">
-          <string>Numero de procesos nuevos: 0</string>
+          <string>Número de procesos nuevos: 0</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
@@ -344,8 +344,8 @@
       <property name="title">
        <string>Procesos bloqueados</string>
       </property>
-      <layout class="QGridLayout" name="gridLayout_6">
-       <item row="0" column="0">
+      <layout class="QGridLayout" name="gridLayout_3">
+       <item row="0" column="0" colspan="3">
         <widget class="QTableWidget" name="bloqueados_tableWidget">
          <property name="enabled">
           <bool>true</bool>
@@ -377,6 +377,46 @@
            <string>TB</string>
           </property>
          </column>
+        </widget>
+       </item>
+       <item row="1" column="0" colspan="3">
+        <widget class="QLabel" name="suspendidos_label">
+         <property name="text">
+          <string>Número de procesos suspendidos: 0</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="sigRegresar_label">
+         <property name="text">
+          <string>Sig. a regresar:</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QLabel" name="idSuspendido_label">
+         <property name="text">
+          <string>ID: null</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="2">
+        <widget class="QLabel" name="tamSuspendido_label">
+         <property name="text">
+          <string>Tamaño: null</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
         </widget>
        </item>
       </layout>
@@ -428,6 +468,20 @@
            <string>Resultado</string>
           </property>
          </column>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="label_2">
+         <property name="text">
+          <string/>
+         </property>
         </widget>
        </item>
       </layout>
