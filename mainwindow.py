@@ -233,7 +233,7 @@ class MainWindow(QMainWindow):
         self.interrupciones = False
 
         try:
-            remove("suspendidos.txt")  # No sirve -.-   ------------------------------------
+            remove("suspendidos.txt")
         except:
             pass
     
