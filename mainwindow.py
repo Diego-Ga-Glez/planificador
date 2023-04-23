@@ -129,6 +129,7 @@ class MainWindow(QMainWindow):
                     if len(self.suspendidos) != 0:
                         paginas = ceil(self.suspendidos[0][11]/5)
                         if self.marcos_disponibles >= paginas:
+                            self.suspendidos[0][7] = 1
                             self.procesos.insert(0,self.suspendidos.pop(0))
                             self.memoria()
                             self.tabla_pendientes(1,0)
@@ -298,11 +299,11 @@ class MainWindow(QMainWindow):
                 if self.pausa == False:
                     if not self.suspendido:
                         if len(self.bloqueados) != 0:
-                            self.bloqueados[0][7] = 1
                             self.liberar_marcos(self.bloqueados[0])
                             self.suspendidos.append(self.bloqueados.pop(0))
                             
                             self.txt_suspendidos()
+                            self.suspendido = True
 
                     self.contador += 1
                     self.ui.contador_label.setText('Contador general: ' + str(self.contador))
