@@ -129,9 +129,7 @@ class MainWindow(QMainWindow):
                     if len(self.suspendidos) != 0:
                         paginas = ceil(self.suspendidos[0][11]/5)
                         if self.marcos_disponibles >= paginas:
-                            self.suspendidos[0][7] = 1
-                            self.procesos.insert(0,self.suspendidos.pop(0))
-                            self.memoria()
+                            self.memoria_bloqueados()
                             self.tabla_pendientes(1,0)
                             self.txt_suspendidos()
         
@@ -165,6 +163,43 @@ class MainWindow(QMainWindow):
                 self.marcos[i][2] = 'null'
 
         self.marcos_disponibles = self.calc_marcos_disponibles()
+    
+    
+    # ingresar procesos suspendidos a memoria (estado bloqueado)
+    def memoria_bloqueados(self):
+        # verificar que haya procesos para agregar en bloqueados
+        if len(self.suspendidos) == 0:
+            return
+        
+        tamaño = self.suspendidos[0][11]
+        paginas = ceil(tamaño/5) 
+        num_pagina = 1
+
+        for i in range(self.num_marcos):
+            if paginas == 0: break
+            # mientras paginas no sea cero y si hay una posicion libre 
+            # se agrega una pagina
+            if self.marcos[i] == [0,'null','null']:
+                # se agrega el espacio ocupado
+                if tamaño >= 5:
+                    self.marcos[i][0] = 5
+                    tamaño -= 5
+                else:
+                    self.marcos[i][0] = tamaño
+                    tamaño-=tamaño
+
+                # se agrega en el marco quien lo esta ocupando (id del proceso)
+                self.marcos[i][1] = self.suspendidos[0][0]
+                # se agrega el número de página
+                self.marcos[i][2] = num_pagina
+                paginas -= 1
+                num_pagina += 1
+
+        # recalcular marcos disponibles
+        self.marcos_disponibles = self.calc_marcos_disponibles()
+
+        self.suspendidos[0][7] = 1
+        self.bloqueados.append(self.suspendidos.pop(0))
     
     # ingresar procesos a memoria
     def memoria(self):
@@ -292,8 +327,8 @@ class MainWindow(QMainWindow):
                         self.suspendidos.append(self.bloqueados.pop(0))
                        
                         self.txt_suspendidos()
-                    else:
-                         mantener_quantum = False
+                    
+                    mantener_quantum = False
                                       
             else:
                 if self.pausa == False:

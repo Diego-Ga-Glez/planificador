@@ -24,7 +24,7 @@ class TimeDialog(QDialog):
     def tabla_tiempos(self):
         self.row = 0
         self.ui.tiempos_tableWidget.setColumnCount(14)
-        rowCount = len(self.parent().terminados + self.parent().lote + self.parent().bloqueados + self.parent().procesos)
+        rowCount = len(self.parent().terminados + self.parent().lote + self.parent().bloqueados + self.parent().procesos + self.parent().suspendidos)
         self.ui.tiempos_tableWidget.setRowCount(rowCount)
         self.imprimir_tablas(self.parent().terminados)
         if len(self.parent().lote) > 0:
@@ -32,6 +32,7 @@ class TimeDialog(QDialog):
         self.imprimir_tablas(self.parent().lote[1:])
         self.imprimir_tablas(self.parent().bloqueados)
         self.imprimir_tablas(self.parent().procesos)
+        self.imprimir_tablas(self.parent().suspendidos)
 
 
     def imprimir_tablas(self, lista):
@@ -50,6 +51,8 @@ class TimeDialog(QDialog):
                 estado_widget = QTableWidgetItem('Bloqueado')
             elif lista == self.parent().procesos:
                 estado_widget = QTableWidgetItem('Nuevo')
+            elif lista == self.parent().suspendidos:
+                estado_widget = QTableWidgetItem('Suspendido')
 
             operacion = self.parent().concatenar_op(i[1], i[2], i[3])
             op_widget = QTableWidgetItem(operacion)
