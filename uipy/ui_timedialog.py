@@ -23,7 +23,7 @@ class Ui_TimeDialog(object):
     def setupUi(self, TimeDialog):
         if not TimeDialog.objectName():
             TimeDialog.setObjectName(u"TimeDialog")
-        TimeDialog.resize(945, 352)
+        TimeDialog.resize(1032, 352)
         TimeDialog.setFocusPolicy(Qt.NoFocus)
         TimeDialog.setStyleSheet(u"background-color: #f1e4e8;")
         self.gridLayout_4 = QGridLayout(TimeDialog)
